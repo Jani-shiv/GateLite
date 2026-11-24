@@ -18,36 +18,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole, VisitorType, VisitState } from '@prisma/client';
-
-class CreateWalkInDto {
-  flatId = '';
-  visitorName = '';
-  visitorPhone?: string;
-  purpose = '';
-  visitorType = VisitorType.VISITOR;
-  photoUrl?: string;
-}
-
-class CreatePreApprovedDto {
-  flatId = '';
-  visitorName = '';
-  visitorPhone?: string;
-  validFrom = '';
-  validTo = '';
-  usesLeft = 1;
-  purpose?: string;
-}
-
-class VerifyPassDto {
-  code = '';
-}
-
-class ApproveVisitDto {
-  action: 'APPROVE' | 'DENY' = 'APPROVE';
-}
-
-class CheckInDto {}
-class CheckOutDto {}
+import { CreateWalkInDto, CreatePreApprovedDto, VerifyPassDto, ApproveVisitDto, CheckInDto, CheckOutDto } from './dto/visits.dto';
 
 @ApiTags('visits')
 @Controller('visits')
@@ -156,5 +127,38 @@ export class VisitsController {
     @CurrentUser('societyId') societyId: string,
   ) {
     return this.visitsService.getPendingVisits(societyId, guardId);
+  }
+
+  // Delivery & Cab quick flows
+  @Post('delivery')
+  @HttpCode(HttpStatus.CREATED)
+  @UseGuards(RolesGuard)
+  @Roles(MembershipRole.GUARD)
+  @ApiOperation({ summary: 'Create delivery visit (guard only)' })
+  async createDelivery(
+    @CurrentUser('id') guardId: string,
+    @CurrentUser('societyId') societyId: string,
+    @Body() dto: CreateWalkInDto,
+  ) {
+    return this.visitsService.createWalkIn(societyId, guardId, {
+      ...dto,
+      visitorType: VisitorType.DELIVERY,
+    });
+  }
+
+  @Post('cab')
+  @HttpCode(HttpStatus.CREATED)
+  @UseGuards(RolesGuard)
+  @Roles(MembershipRole.GUARD)
+  @ApiOperation({ summary: 'Create cab visit (guard only)' })
+  async createCab(
+    @CurrentUser('id') guardId: string,
+    @CurrentUser('societyId') societyId: string,
+    @Body() dto: CreateWalkInDto,
+  ) {
+    return this.visitsService.createWalkIn(societyId, guardId, {
+      ...dto,
+      visitorType: VisitorType.CAB,
+    });
   }
 }

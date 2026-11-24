@@ -15,6 +15,7 @@ const mockJwtService = {
     flatId: 'flat-1',
     role: 'OWNER',
     deviceId: 'device-1',
+    type: 'refresh',
   }),
 };
 
@@ -80,17 +81,17 @@ const createMockPrisma = () => ({
 });
 
 describe('AuthService', () => {
-  let service: AuthService | undefined;
+  let service: AuthService;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: 'PrismaService', useValue: createMockPrisma() },
-        { provide: 'JwtService', useValue: mockJwtService },
-        { provide: 'ConfigService', useValue: mockConfigService },
-        { provide: 'OtpProvider', useValue: mockOtpProvider },
-        { provide: 'DevicesService', useValue: mockDevicesService },
+        { provide: PrismaService, useValue: createMockPrisma() },
+        { provide: JwtService, useValue: mockJwtService },
+        { provide: ConfigService, useValue: mockConfigService },
+        { provide: 'OTP_PROVIDER', useValue: mockOtpProvider },
+        { provide: DevicesService, useValue: mockDevicesService },
       ],
     }).compile();
 
@@ -99,5 +100,118 @@ describe('AuthService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('sendOtp', () => {
+    it('should send OTP successfully', async () => {
+      const phone = '+919876543210';
+      const deviceId = 'device-1';
+
+      await service.sendOtp(phone, deviceId);
+
+      expect(service['prisma'].otpRequest.count).toHaveBeenCalled();
+      expect(service['prisma'].otpRequest.create).toHaveBeenCalled();
+      expect(service['otpProvider'].send).toHaveBeenCalled();
+    });
+
+    it('should throw when rate limit exceeded', async () => {
+      const mockPrisma = createMockPrisma();
+      mockPrisma.otpRequest.count.mockResolvedValueOnce(3);
+
+      const module = await Test.createTestingModule({
+        providers: [
+          AuthService,
+          { provide: PrismaService, useValue: mockPrisma },
+          { provide: JwtService, useValue: mockJwtService },
+          { provide: ConfigService, useValue: mockConfigService },
+          { provide: 'OTP_PROVIDER', useValue: mockOtpProvider },
+          { provide: DevicesService, useValue: mockDevicesService },
+        ],
+      }).compile();
+
+      const testService = module.get<AuthService>(AuthService);
+      await expect(testService.sendOtp('+919876543210', 'device-1')).rejects.toThrow('Too many OTP requests');
+    });
+  });
+
+  describe('verifyOtp', () => {
+    it('should verify OTP and return tokens', async () => {
+      const result = await service.verifyOtp('+919876543210', '123456', 'device-1');
+
+      expect(result).toHaveProperty('accessToken');
+      expect(result).toHaveProperty('refreshToken');
+      expect(result).toHaveProperty('user');
+      expect(result.user.id).toBe('user-1');
+      expect(service['prisma'].otpRequest.update).toHaveBeenCalled();
+      expect(service['prisma'].refreshToken.create).toHaveBeenCalled();
+    });
+
+    it('should throw for invalid OTP', async () => {
+      const mockPrisma = createMockPrisma();
+      mockPrisma.otpRequest.findFirst.mockResolvedValueOnce(null);
+
+      const module = await Test.createTestingModule({
+        providers: [
+          AuthService,
+          { provide: PrismaService, useValue: mockPrisma },
+          { provide: JwtService, useValue: mockJwtService },
+          { provide: ConfigService, useValue: mockConfigService },
+          { provide: 'OTP_PROVIDER', useValue: mockOtpProvider },
+          { provide: DevicesService, useValue: mockDevicesService },
+        ],
+      }).compile();
+
+      const testService = module.get<AuthService>(AuthService);
+      await expect(testService.verifyOtp('+919876543210', 'wrong', 'device-1')).rejects.toThrow('Invalid or expired OTP');
+    });
+  });
+
+  describe('refreshTokens', () => {
+    it('should refresh tokens successfully', async () => {
+      const mockPrisma = createMockPrisma();
+      mockPrisma.refreshToken.findUnique.mockResolvedValueOnce({
+        revoked: false,
+        expiresAt: new Date(Date.now() + 86400000),
+      });
+
+      const module = await Test.createTestingModule({
+        providers: [
+          AuthService,
+          { provide: PrismaService, useValue: mockPrisma },
+          { provide: JwtService, useValue: mockJwtService },
+          { provide: ConfigService, useValue: mockConfigService },
+          { provide: 'OTP_PROVIDER', useValue: mockOtpProvider },
+          { provide: DevicesService, useValue: mockDevicesService },
+        ],
+      }).compile();
+
+      const testService = module.get<AuthService>(AuthService);
+      const result = await testService.refreshTokens('mock-refresh-token', 'device-1');
+
+      expect(result).toHaveProperty('accessToken');
+      expect(result).toHaveProperty('refreshToken');
+    });
+
+    it('should throw for revoked token', async () => {
+      const mockPrisma = createMockPrisma();
+      mockPrisma.refreshToken.findUnique.mockResolvedValueOnce({
+        revoked: true,
+        expiresAt: new Date(Date.now() + 86400000),
+      });
+
+      const module = await Test.createTestingModule({
+        providers: [
+          AuthService,
+          { provide: PrismaService, useValue: mockPrisma },
+          { provide: JwtService, useValue: mockJwtService },
+          { provide: ConfigService, useValue: mockConfigService },
+          { provide: 'OTP_PROVIDER', useValue: mockOtpProvider },
+          { provide: DevicesService, useValue: mockDevicesService },
+        ],
+      }).compile();
+
+      const testService = module.get<AuthService>(AuthService);
+      await expect(testService.refreshTokens('revoked-token', 'device-1')).rejects.toThrow('Token reuse detected');
+    });
   });
 });

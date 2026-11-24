@@ -133,20 +133,20 @@
 ## Phase 2: Core Gate Flow (Weeks 6-11) - **NOT STARTED**
 
 ### 2.1 Society/Block/Flat/Resident Onboarding
-- [ ] 2.1.1 Build `SocietiesModule` (CRUD for societies, blocks, flats)
-- [ ] 2.1.2 Build `ResidentsModule` (invite resident, accept invite, manage memberships)
-- [ ] 2.1.3 Build Admin CSV import for flats and residents (validate, preview, commit)
-- [ ] 2.1.4 API endpoints: `POST /v1/societies`, `POST /v1/societies/:id/blocks`, `POST /v1/societies/:id/flats`, `POST /v1/societies/:id/residents/import`
+- [x] 2.1.1 Build `SocietiesModule` (CRUD for societies, blocks, flats)
+- [x] 2.1.2 Build `ResidentsModule` (invite resident, accept invite, manage memberships)
+- [x] 2.1.3 Build Admin CSV import for flats and residents (validate, preview, commit)
+- [x] 2.1.4 API endpoints: `POST /v1/societies`, `POST /v1/societies/:id/blocks`, `POST /v1/societies/:id/flats`, `POST /v1/societies/:id/residents/import`
 - [ ] 2.1.5 Admin web: Society setup wizard, block/flat management, resident import UI
 - [ ] 2.1.6 Tenant isolation tests for all endpoints
 - [ ] 2.1.7 Unit tests for CSV parsing, validation, duplicate handling
 
 ### 2.2 Pre-Approval Passes (QR + Code)
-- [ ] 2.2.1 Build `PassesModule`: create pass with visitor, validity window, `uses_left`, HMAC-signed code
-- [ ] 2.2.2 Generate QR code containing signed token (code + expiry + flat_id + uses_left)
-- [ ] 2.2.3 Share pass via link (web view) and SMS/WhatsApp (provider interface)
-- [ ] 2.2.4 Guard app: verify QR/code **offline** using local HMAC verification (cached public key)
-- [ ] 2.2.5 API: `POST /v1/passes`, `GET /v1/passes/:code/verify` (online validation)
+- [x] 2.2.1 Build `PassesModule`: create pass with visitor, validity window, `uses_left`, HMAC-signed code
+- [x] 2.2.2 Generate QR code containing signed token (code + expiry + flat_id + uses_left)
+- [x] 2.2.3 Share pass via link (web view) and SMS/WhatsApp (provider interface)
+- [x] 2.2.4 Guard app: verify QR/code **offline** using local HMAC verification (cached public key)
+- [x] 2.2.5 API: `POST /v1/passes`, `GET /v1/passes/:code/verify` (online validation)
 - [ ] 2.2.6 Resident app: create pass screen, list active passes, revoke pass
 - [ ] 2.2.7 Guard app: scan QR (camera), manual code entry, offline indicator
 - [ ] 2.2.8 Unit tests: HMAC signing/verification, expiry, uses_left decrement, offline validation
