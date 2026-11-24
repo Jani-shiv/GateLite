@@ -21,10 +21,10 @@ import { MembershipRole, TicketCategory, TicketStatus, TicketPriority } from '@p
 
 class CreateTicketDto {
   flatId?: string;
-  category: TicketCategory;
-  priority: TicketPriority;
-  title: string;
-  description: string;
+  category = TicketCategory.MAINTENANCE;
+  priority = TicketPriority.MEDIUM;
+  title = '';
+  description = '';
 }
 
 class UpdateTicketDto {
@@ -34,7 +34,7 @@ class UpdateTicketDto {
 }
 
 class AddCommentDto {
-  body: string;
+  body = '';
   isInternal?: boolean;
 }
 

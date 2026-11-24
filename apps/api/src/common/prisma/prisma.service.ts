@@ -3,6 +3,9 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+  // Add index signature for dynamic model access
+  [key: string]: any;
+
   async onModuleInit() {
     await this.$connect();
   }
@@ -12,7 +15,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   }
 
   async cleanDatabase() {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env['NODE_ENV'] === 'production') {
       throw new Error('Cannot clean database in production');
     }
     const models = Reflect.ownKeys(this).filter(
@@ -20,8 +23,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     );
     return Promise.all(
       models.map((model) => {
-        if (typeof this[model as string]?.deleteMany === 'function') {
-          return this[model as string].deleteMany();
+        const modelName = model as string;
+        if (typeof this[modelName]?.deleteMany === 'function') {
+          return this[modelName].deleteMany();
         }
       }),
     );

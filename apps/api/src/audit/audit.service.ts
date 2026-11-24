@@ -20,14 +20,14 @@ export class AuditService {
   }
 
   async findAll(societyId: string, userId: string, params: {
-    page?: number;
-    limit?: number;
-    actorId?: string;
-    action?: string;
-    entity?: string;
-    entityId?: string;
-    dateFrom?: Date;
-    dateTo?: Date;
+    page?: number | undefined;
+    limit?: number | undefined;
+    actorId?: string | undefined;
+    action?: string | undefined;
+    entity?: string | undefined;
+    entityId?: string | undefined;
+    dateFrom?: Date | undefined;
+    dateTo?: Date | undefined;
   } = {}) {
     const membership = await this.prisma.membership.findFirst({ where: { userId, societyId, status: 'ACTIVE' } });
     if (!membership) throw new ForbiddenException('Access denied');
@@ -53,7 +53,6 @@ export class AuditService {
     const [logs, total] = await Promise.all([
       this.prisma.auditLog.findMany({
         where,
-        include: { actor: { select: { id: true, name: true, phone: true } } },
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,

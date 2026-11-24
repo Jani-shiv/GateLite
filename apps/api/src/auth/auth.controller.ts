@@ -14,19 +14,19 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class SendOtpDto {
-  phone: string;
-  deviceId: string;
+  phone = '';
+  deviceId = '';
 }
 
 class VerifyOtpDto {
-  phone: string;
-  code: string;
-  deviceId: string;
+  phone = '';
+  code = '';
+  deviceId = '';
 }
 
 class RefreshTokenDto {
-  refreshToken: string;
-  deviceId: string;
+  refreshToken = '';
+  deviceId = '';
 }
 
 @ApiTags('auth')

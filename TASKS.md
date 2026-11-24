@@ -76,7 +76,7 @@
 - [x] 1.7.1 Create `infra/docker/docker-compose.yml` with: Postgres 16, Redis 7, MinIO (S3), Mailpit (email testing)
 - [x] 1.7.2 Add healthchecks for all services
 - [x] 1.7.3 Create `infra/docker/.env.example` for docker-compose
-- [ ] 1.7.4 Verify: `docker compose -f infra/docker/docker-compose.yml up -d` starts all services healthy
+- [x] 1.7.4 Verify: `docker compose -f infra/docker/docker-compose.yml up -d` starts all services healthy
 
 ### 1.8 CI/CD Pipeline (GitHub Actions)
 - [x] 1.8.1 Create `.github/workflows/ci.yml`: lint → typecheck → test → build → docker build

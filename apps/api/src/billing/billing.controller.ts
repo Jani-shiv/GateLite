@@ -19,20 +19,20 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole, InvoiceStatus, PaymentStatus } from '@prisma/client';
 
 class CreateInvoiceDto {
-  flatId: string;
-  period: string;
-  amount: number;
-  dueDate: string;
+  flatId = '';
+  period = '';
+  amount = 0;
+  dueDate = '';
 }
 
 class BulkCreateInvoiceDto {
-  invoices: CreateInvoiceDto[];
+  invoices: CreateInvoiceDto[] = [];
 }
 
 class VerifyPaymentDto {
-  orderId: string;
-  paymentId: string;
-  signature: string;
+  orderId = '';
+  paymentId = '';
+  signature = '';
 }
 
 @ApiTags('billing')

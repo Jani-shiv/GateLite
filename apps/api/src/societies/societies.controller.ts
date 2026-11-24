@@ -15,11 +15,11 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class CreateSocietyDto {
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  pincode: string;
+  name = '';
+  address = '';
+  city = '';
+  state = '';
+  pincode = '';
 }
 
 class UpdateSocietyDto {
@@ -31,7 +31,7 @@ class UpdateSocietyDto {
 }
 
 class UpdateSettingsDto {
-  settings: Record<string, any>;
+  settings: Record<string, any> = {};
 }
 
 @ApiTags('societies')

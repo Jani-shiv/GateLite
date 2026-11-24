@@ -15,7 +15,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class RegisterDeviceDto {
-  deviceId: string;
+  deviceId = '';
   platform?: string;
 }
 

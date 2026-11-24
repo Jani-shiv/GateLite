@@ -3,12 +3,13 @@ import {
   UnauthorizedException,
   ConflictException,
   BadRequestException,
+  Inject,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 import { PrismaService } from '../common/prisma/prisma.service';
-import { OtpProvider } from '../common/interfaces/otp-provider.interface';
+import { OTP_PROVIDER } from '../common/tokens';
 import { DevicesService } from '../devices/devices.service';
 
 interface TokenPayload {
@@ -34,7 +35,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private otpProvider: OtpProvider,
+    @Inject('OTP_PROVIDER') private otpProvider: any,
     private devicesService: DevicesService,
   ) {}
 
@@ -145,7 +146,7 @@ export class AuthService {
   async refreshTokens(refreshToken: string, deviceId: string): Promise<{ accessToken: string; refreshToken: string }> {
     try {
       const payload = this.jwtService.verify<TokenPayload>(refreshToken, {
-        secret: this.configService.get('JWT_REFRESH_SECRET'),
+        secret: this.configService.get('JWT_REFRESH_SECRET')!,
       });
 
       if (payload.type !== 'refresh') {
@@ -224,12 +225,12 @@ export class AuthService {
     };
 
     const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_ACCESS_SECRET'),
+      secret: this.configService.get('JWT_ACCESS_SECRET')!,
       expiresIn: this.accessTokenExpiry,
     });
 
     const refreshToken = this.jwtService.sign({ ...payload, type: 'refresh' }, {
-      secret: this.configService.get('JWT_REFRESH_SECRET'),
+      secret: this.configService.get('JWT_REFRESH_SECRET')!,
       expiresIn: this.refreshTokenExpiry,
     });
 

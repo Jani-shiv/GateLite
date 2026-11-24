@@ -34,12 +34,12 @@ export class TicketsService {
   }
 
   async findAll(societyId: string, userId: string, params: {
-    page?: number;
-    limit?: number;
-    status?: TicketStatus;
-    category?: TicketCategory;
-    priority?: TicketPriority;
-    flatId?: string;
+    page?: number | undefined;
+    limit?: number | undefined;
+    status?: TicketStatus | undefined;
+    category?: TicketCategory | undefined;
+    priority?: TicketPriority | undefined;
+    flatId?: string | undefined;
   } = {}) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId, societyId, status: 'ACTIVE' },

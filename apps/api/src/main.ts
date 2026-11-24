@@ -17,7 +17,7 @@ async function bootstrap() {
   
   // CORS
   app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
+    origin: process.env['CORS_ORIGIN']?.split(',') || ['http://localhost:3000'],
     credentials: true,
   });
   
@@ -57,7 +57,7 @@ async function bootstrap() {
     },
   });
   
-  const port = process.env.PORT || 4000;
+  const port = process.env['PORT'] || 4000;
   await app.listen(port);
   console.log(`🚀 GateLite API running on http://localhost:${port}`);
   console.log(`📚 Swagger docs at http://localhost:${port}/docs`);

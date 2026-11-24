@@ -18,17 +18,17 @@ import { SocietyScopeGuard } from '../common/guards/society-scope.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class CreatePassDto {
-  flatId: string;
-  visitorName: string;
+  flatId = '';
+  visitorName = '';
   visitorPhone?: string;
-  validFrom: string;
-  validTo: string;
-  usesLeft: number;
+  validFrom = '';
+  validTo = '';
+  usesLeft = 1;
   purpose?: string;
 }
 
 class VerifyCodeDto {
-  code: string;
+  code = '';
 }
 
 @ApiTags('passes')

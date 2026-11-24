@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException, Inject } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { VisitsGateway } from './visits.gateway';
-import { PushProvider } from '../common/interfaces/otp-provider.interface';
-import { OtpProvider } from '../common/interfaces/otp-provider.interface';
-import { VisitState, VisitorType } from '@prisma/client';
+import { PUSH_PROVIDER, OTP_PROVIDER } from '../common/tokens';
+import { VisitorType, VisitState } from '@prisma/client';
 
 @Injectable()
 export class VisitsService {
@@ -12,8 +11,8 @@ export class VisitsService {
   constructor(
     private prisma: PrismaService,
     private visitsGateway: VisitsGateway,
-    private pushProvider: PushProvider,
-    private otpProvider: OtpProvider,
+    @Inject('PUSH_PROVIDER') private pushProvider: any,
+    @Inject('OTP_PROVIDER') private otpProvider: any,
   ) {}
 
   async createWalkIn(societyId: string, guardId: string, data: {
@@ -32,7 +31,7 @@ export class VisitsService {
 
     // Create or find visitor
     let visitor = await this.prisma.visitor.findFirst({
-      where: { societyId, name: data.visitorName, phone: data.visitorPhone },
+      where: { societyId, name: data.visitorName, phone: data.visitorPhone ?? null },
     });
 
     if (!visitor) {
@@ -40,8 +39,8 @@ export class VisitsService {
         data: {
           societyId,
           name: data.visitorName,
-          phone: data.visitorPhone,
-          photoUrl: data.photoUrl,
+          phone: data.visitorPhone ?? null,
+          photoUrl: data.photoUrl ?? null,
           type: data.visitorType,
         },
       });
@@ -85,7 +84,7 @@ export class VisitsService {
 
     // Create or find visitor
     let visitor = await this.prisma.visitor.findFirst({
-      where: { societyId, name: data.visitorName, phone: data.visitorPhone },
+      where: { societyId, name: data.visitorName, phone: data.visitorPhone ?? null },
     });
 
     if (!visitor) {
@@ -93,7 +92,7 @@ export class VisitsService {
         data: {
           societyId,
           name: data.visitorName,
-          phone: data.visitorPhone,
+          phone: data.visitorPhone ?? null,
           type: VisitorType.VISITOR,
         },
       });
@@ -143,7 +142,7 @@ export class VisitsService {
         flatId: pass.flatId,
         visitorId: pass.visitorId,
         passId: pass.id,
-        guardId,
+        guardId: guardId ?? null,
         state: VisitState.PRE_APPROVED,
         purpose: 'Pre-approved visit',
       },
@@ -241,7 +240,7 @@ export class VisitsService {
     });
   }
 
-  async getVisitHistory(societyId: string, userId: string, flatId?: string, params: { page?: number; limit?: number } = {}) {
+  async getVisitHistory(societyId: string, userId: string, flatId?: string, params: { page?: number | undefined; limit?: number | undefined } = {}) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId, societyId, status: 'ACTIVE' },
     });
@@ -321,7 +320,7 @@ export class VisitsService {
   private async escalateVisit(visitId: string) {
     const visit = await this.prisma.visit.findUnique({
       where: { id: visitId },
-      include: { flat: { include: { memberships: { where: { status: 'ACTIVE' }, include: { user: true } } } } },
+      include: { visitor: true, flat: { include: { memberships: { where: { status: 'ACTIVE' }, include: { user: true } } } } },
     });
 
     if (!visit || visit.state !== VisitState.PENDING) return;
@@ -369,7 +368,7 @@ export class VisitsService {
   private generateSecureCode(): string {
     // Generate HMAC-signed code for offline verification
     const payload = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    return require('crypto').createHmac('sha256', process.env.PASS_SIGNING_KEY || 'dev-key')
+    return require('crypto').createHmac('sha256', process.env['PASS_SIGNING_KEY'] || 'dev-key')
       .update(payload)
       .digest('hex')
       .substr(0, 8)

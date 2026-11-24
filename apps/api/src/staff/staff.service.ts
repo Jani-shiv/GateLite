@@ -75,7 +75,7 @@ export class StaffService {
     });
   }
 
-  async getAttendance(societyId: string, userId: string, params: { staffId?: string; flatId?: string; dateFrom?: Date; dateTo?: Date } = {}) {
+  async getAttendance(societyId: string, userId: string, params: { staffId?: string | undefined; flatId?: string | undefined; dateFrom?: Date | undefined; dateTo?: Date | undefined } = {}) {
     await this.verifyMember(societyId, userId);
     
     const where: any = { staff: { societyId } };

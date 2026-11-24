@@ -18,7 +18,7 @@ import { PrismaService } from '../common/prisma/prisma.service';
 })
 export class VisitsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   private userSockets = new Map<string, Set<string>>(); // userId -> Set<socketId>
   private socketUsers = new Map<string, string>(); // socketId -> userId
@@ -31,14 +31,14 @@ export class VisitsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleConnection(client: Socket) {
     try {
-      const token = client.handshake.auth.token || client.handshake.headers.authorization?.replace('Bearer ', '');
+      const token = client.handshake.auth['token'] || client.handshake.headers['authorization']?.replace('Bearer ', '');
       if (!token) {
         client.disconnect();
         return;
       }
 
       const payload = this.jwtService.verify(token, {
-        secret: this.configService.get('JWT_ACCESS_SECRET'),
+        secret: this.configService.get('JWT_ACCESS_SECRET')!,
       });
 
       // Verify user exists and is active

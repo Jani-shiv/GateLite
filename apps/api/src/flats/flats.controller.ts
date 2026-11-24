@@ -18,9 +18,9 @@ import { SocietyScopeGuard } from '../common/guards/society-scope.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class CreateFlatDto {
-  blockId: string;
-  number: string;
-  floor: number;
+  blockId = '';
+  number = '';
+  floor = 0;
 }
 
 class UpdateFlatDto {
@@ -29,7 +29,7 @@ class UpdateFlatDto {
 }
 
 class BulkCreateFlatDto {
-  flats: CreateFlatDto[];
+  flats: CreateFlatDto[] = [];
 }
 
 @ApiTags('flats')

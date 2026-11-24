@@ -17,11 +17,11 @@ import { SocietyScopeGuard } from '../common/guards/society-scope.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class CreateBlockDto {
-  name: string;
+  name = '';
 }
 
 class UpdateBlockDto {
-  name: string;
+  name = '';
 }
 
 @ApiTags('blocks')

@@ -20,30 +20,30 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole, VisitorType, VisitState } from '@prisma/client';
 
 class CreateWalkInDto {
-  flatId: string;
-  visitorName: string;
+  flatId = '';
+  visitorName = '';
   visitorPhone?: string;
-  purpose: string;
-  visitorType: VisitorType;
+  purpose = '';
+  visitorType = VisitorType.VISITOR;
   photoUrl?: string;
 }
 
 class CreatePreApprovedDto {
-  flatId: string;
-  visitorName: string;
+  flatId = '';
+  visitorName = '';
   visitorPhone?: string;
-  validFrom: string;
-  validTo: string;
-  usesLeft: number;
+  validFrom = '';
+  validTo = '';
+  usesLeft = 1;
   purpose?: string;
 }
 
 class VerifyPassDto {
-  code: string;
+  code = '';
 }
 
 class ApproveVisitDto {
-  action: 'APPROVE' | 'DENY';
+  action: 'APPROVE' | 'DENY' = 'APPROVE';
 }
 
 class CheckInDto {}

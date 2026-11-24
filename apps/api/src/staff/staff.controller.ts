@@ -21,8 +21,8 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole } from '@prisma/client';
 
 class CreateStaffDto {
-  name: string;
-  role: string;
+  name = '';
+  role = '';
 }
 
 class UpdateStaffDto {
@@ -31,7 +31,7 @@ class UpdateStaffDto {
 }
 
 class CheckInDto {
-  flatId: string;
+  flatId = '';
 }
 
 class CheckOutDto {}

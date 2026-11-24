@@ -21,7 +21,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole, BookingStatus } from '@prisma/client';
 
 class CreateAmenityDto {
-  name: string;
+  name = '';
   rules?: Record<string, any>;
   fee?: number;
 }
@@ -34,10 +34,10 @@ class UpdateAmenityDto {
 }
 
 class CreateBookingDto {
-  amenityId: string;
-  flatId: string;
-  slotStart: string;
-  slotEnd: string;
+  amenityId = '';
+  flatId = '';
+  slotStart = '';
+  slotEnd = '';
 }
 
 class UpdateBookingDto {

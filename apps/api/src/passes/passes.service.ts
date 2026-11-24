@@ -23,7 +23,7 @@ export class PassesService {
 
     // Create or find visitor
     let visitor = await this.prisma.visitor.findFirst({
-      where: { societyId, name: data.visitorName, phone: data.visitorPhone },
+      where: { societyId, name: data.visitorName, phone: data.visitorPhone ?? null },
     });
 
     if (!visitor) {
@@ -31,7 +31,7 @@ export class PassesService {
         data: {
           societyId,
           name: data.visitorName,
-          phone: data.visitorPhone,
+          phone: data.visitorPhone ?? null,
           type: VisitorType.VISITOR,
         },
       });
@@ -149,7 +149,7 @@ export class PassesService {
     
     const payloadStr = Buffer.from(JSON.stringify(payload)).toString('base64url');
     const signature = crypto
-      .createHmac('sha256', process.env.PASS_SIGNING_KEY || 'dev-signing-key')
+      .createHmac('sha256', process.env['PASS_SIGNING_KEY'] || 'dev-signing-key')
       .update(payloadStr)
       .digest('hex')
       .substr(0, 16);

@@ -1,13 +1,14 @@
-import { Injectable, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, BadRequestException, Inject } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
-import { PaymentProvider, CreateOrderParams, VerifyPaymentParams } from '../common/interfaces/otp-provider.interface';
+import { PAYMENT_PROVIDER } from '../common/tokens';
 import { InvoiceStatus, PaymentStatus } from '@prisma/client';
+import type { CreateOrderParams, VerifyPaymentParams } from '../common/interfaces/otp-provider.interface';
 
 @Injectable()
 export class BillingService {
   constructor(
     private prisma: PrismaService,
-    private paymentProvider: PaymentProvider,
+    @Inject('PAYMENT_PROVIDER') private paymentProvider: any,
   ) {}
 
   async createInvoice(societyId: string, userId: string, data: {
@@ -43,10 +44,10 @@ export class BillingService {
   }
 
   async findInvoices(societyId: string, userId: string, params: {
-    page?: number;
-    limit?: number;
-    status?: InvoiceStatus;
-    flatId?: string;
+    page?: number | undefined;
+    limit?: number | undefined;
+    status?: InvoiceStatus | undefined;
+    flatId?: string | undefined;
   } = {}) {
     const membership = await this.prisma.membership.findFirst({ where: { userId, societyId, status: 'ACTIVE' } });
     if (!membership) throw new ForbiddenException('Access denied');
@@ -93,7 +94,7 @@ export class BillingService {
     if (!membership) throw new ForbiddenException('Access denied');
 
     const invoice = await this.prisma.invoice.findFirst({
-      where: { id: invoiceId, societyId, ...(!membership.role === 'ADMIN' && { flatId: membership.flatId }) },
+      where: { id: invoiceId, societyId, ...(membership.role !== 'ADMIN' && { flatId: membership.flatId }) },
     });
     if (!invoice) throw new NotFoundException('Invoice not found');
     if (invoice.status !== InvoiceStatus.PENDING && invoice.status !== InvoiceStatus.OVERDUE) {
@@ -144,7 +145,7 @@ export class BillingService {
     return verification;
   }
 
-  async getPayments(societyId: string, userId: string, params: { invoiceId?: string; status?: PaymentStatus } = {}) {
+  async getPayments(societyId: string, userId: string, params: { invoiceId?: string | undefined; status?: PaymentStatus | undefined } = {}) {
     const membership = await this.prisma.membership.findFirst({ where: { userId, societyId, status: 'ACTIVE' } });
     if (!membership) throw new ForbiddenException('Access denied');
 

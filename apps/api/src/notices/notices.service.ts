@@ -1,19 +1,20 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, Inject } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
-import { PushProvider, PushPayload } from '../common/interfaces/otp-provider.interface';
+import { PUSH_PROVIDER } from '../common/tokens';
+import type { PushPayload } from '../common/interfaces/otp-provider.interface';
 
 @Injectable()
 export class NoticesService {
   constructor(
     private prisma: PrismaService,
-    private pushProvider: PushProvider,
+    @Inject('PUSH_PROVIDER') private pushProvider: any,
   ) {}
 
   async create(societyId: string, userId: string, data: {
     title: string;
     body: string;
     pinned?: boolean;
-    publishAt?: Date;
+    publishAt?: Date | null;
   }) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId, societyId, role: 'ADMIN', status: 'ACTIVE' },
@@ -26,7 +27,7 @@ export class NoticesService {
         title: data.title,
         body: data.body,
         pinned: data.pinned ?? false,
-        publishedAt: data.publishAt,
+        publishedAt: data.publishAt ?? null,
         createdById: userId,
       },
     });
@@ -39,7 +40,7 @@ export class NoticesService {
     return notice;
   }
 
-  async findAll(societyId: string, userId: string, params: { page?: number; limit?: number; published?: boolean } = {}) {
+  async findAll(societyId: string, userId: string, params: { page?: number | undefined; limit?: number | undefined; published?: boolean | undefined } = {}) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId, societyId, status: 'ACTIVE' },
     });
@@ -99,9 +100,13 @@ export class NoticesService {
     const wasPublished = !!notice.publishedAt;
     const willPublish = data.publishAt !== undefined ? (data.publishAt ? data.publishAt <= new Date() : false) : wasPublished;
 
+    const { publishAt, ...restData } = data;
     const updated = await this.prisma.notice.update({
       where: { id },
-      data,
+      data: {
+        ...restData,
+        publishedAt: publishAt ?? null,
+      },
     });
 
     // Send notifications if newly published

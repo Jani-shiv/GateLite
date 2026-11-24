@@ -21,8 +21,8 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { MembershipRole } from '@prisma/client';
 
 class CreateNoticeDto {
-  title: string;
-  body: string;
+  title = '';
+  body = '';
   pinned?: boolean;
   publishAt?: string;
 }
@@ -53,7 +53,7 @@ export class NoticesController {
   ) {
     return this.noticesService.create(societyId, userId, {
       ...dto,
-      publishAt: dto.publishAt ? new Date(dto.publishAt) : undefined,
+      publishAt: dto.publishAt ? new Date(dto.publishAt) : null,
     });
   }
 
@@ -95,7 +95,7 @@ export class NoticesController {
   ) {
     return this.noticesService.update(societyId, id, userId, {
       ...dto,
-      publishAt: dto.publishAt ? new Date(dto.publishAt) : dto.publishAt === null ? null : undefined,
+      publishAt: dto.publishAt ? new Date(dto.publishAt) : dto.publishAt === null ? null : null,
     });
   }
 

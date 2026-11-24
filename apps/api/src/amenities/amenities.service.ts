@@ -13,7 +13,7 @@ export class AmenitiesService {
   }) {
     await this.verifyAdmin(societyId, userId);
     return this.prisma.amenity.create({
-      data: { societyId, name: data.name, rules: data.rules || {}, fee: data.fee },
+      data: { societyId, name: data.name, rules: data.rules || {}, fee: data.fee ?? null },
     });
   }
 
@@ -71,7 +71,6 @@ export class AmenitiesService {
 
     return this.prisma.booking.create({
       data: {
-        societyId,
         amenityId: data.amenityId,
         flatId: data.flatId,
         userId,
@@ -81,13 +80,14 @@ export class AmenitiesService {
     });
   }
 
-  async getBookings(societyId: string, userId: string, params: { amenityId?: string; flatId?: string; status?: BookingStatus } = {}) {
+  async getBookings(societyId: string, userId: string, params: { amenityId?: string | undefined; flatId?: string | undefined; status?: BookingStatus | undefined } = {}) {
     await this.verifyMember(societyId, userId);
     
     const membership = await this.prisma.membership.findFirst({ where: { userId, societyId, status: 'ACTIVE' } });
-    const isAdmin = membership?.role === 'ADMIN';
+    if (!membership) throw new ForbiddenException('Access denied');
+    const isAdmin = membership.role === 'ADMIN';
 
-    const where: any = { societyId };
+    const where: any = { amenity: { societyId } };
     if (!isAdmin) where.flatId = membership.flatId;
     else if (params.flatId) where.flatId = params.flatId;
     if (params.amenityId) where.amenityId = params.amenityId;
@@ -104,7 +104,7 @@ export class AmenitiesService {
     const membership = await this.prisma.membership.findFirst({ where: { userId, societyId, status: 'ACTIVE' } });
     if (!membership) throw new ForbiddenException('Access denied');
 
-    const booking = await this.prisma.booking.findFirst({ where: { id, societyId } });
+    const booking = await this.prisma.booking.findFirst({ where: { id, amenity: { societyId } } });
     if (!booking) throw new NotFoundException('Booking not found');
 
     const isAdmin = membership.role === 'ADMIN';

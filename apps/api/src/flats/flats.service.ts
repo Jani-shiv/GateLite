@@ -36,7 +36,10 @@ export class FlatsService {
     await this.verifyAdmin(societyId, userId);
     
     const lines = csvData.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    if (lines.length === 0) return [];
+    const firstLine = lines[0];
+    if (!firstLine) return [];
+    const headers = firstLine.split(',').map(h => h.trim());
     const flats = lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim());
       const obj: any = {};

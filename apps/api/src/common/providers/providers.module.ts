@@ -4,42 +4,42 @@ import { MockSmsProvider, MockWhatsAppProvider } from './mock-sms.provider';
 import { MockPushProvider } from './mock-push.provider';
 import { MockStorageProvider } from './mock-storage.provider';
 import { MockPaymentProvider } from './mock-payment.provider';
-import { OtpProvider, SmsProvider, WhatsAppProvider, PushProvider, StorageProvider, PaymentProvider } from '../interfaces/otp-provider.interface';
+import { OTP_PROVIDER, SMS_PROVIDER, WHATSAPP_PROVIDER, PUSH_PROVIDER, STORAGE_PROVIDER, PAYMENT_PROVIDER } from '../tokens';
 
 @Module({
   providers: [
     {
-      provide: OtpProvider,
-      useClass: process.env.OTP_PROVIDER === 'console' ? ConsoleOtpProvider : MockOtpProvider,
+      provide: OTP_PROVIDER,
+      useClass: process.env['OTP_PROVIDER'] === 'console' ? ConsoleOtpProvider : MockOtpProvider,
     },
     {
-      provide: SmsProvider,
+      provide: SMS_PROVIDER,
       useClass: MockSmsProvider,
     },
     {
-      provide: WhatsAppProvider,
+      provide: WHATSAPP_PROVIDER,
       useClass: MockWhatsAppProvider,
     },
     {
-      provide: PushProvider,
+      provide: PUSH_PROVIDER,
       useClass: MockPushProvider,
     },
     {
-      provide: StorageProvider,
+      provide: STORAGE_PROVIDER,
       useClass: MockStorageProvider,
     },
     {
-      provide: PaymentProvider,
+      provide: PAYMENT_PROVIDER,
       useClass: MockPaymentProvider,
     },
   ],
   exports: [
-    OtpProvider,
-    SmsProvider,
-    WhatsAppProvider,
-    PushProvider,
-    StorageProvider,
-    PaymentProvider,
+    OTP_PROVIDER,
+    SMS_PROVIDER,
+    WHATSAPP_PROVIDER,
+    PUSH_PROVIDER,
+    STORAGE_PROVIDER,
+    PAYMENT_PROVIDER,
   ],
 })
 export class ProvidersModule {}
