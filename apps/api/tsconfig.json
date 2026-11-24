@@ -1,0 +1,13 @@
+{
+  "extends": "@gatelite/config/tsconfig.nestjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*", "test/**/*", "prisma/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

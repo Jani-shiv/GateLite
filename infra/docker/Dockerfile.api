@@ -1,0 +1,44 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY packages/config ./packages/config
+COPY packages/design-tokens ./packages/design-tokens
+COPY apps/api ./apps/api
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Build design tokens
+RUN pnpm --filter=@gatelite/design-tokens run build
+
+# Build API
+RUN pnpm --filter=@gatelite/api run build
+
+# Production stage
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Copy built files
+COPY --from=builder /app/apps/api/dist ./dist
+COPY --from=builder /app/apps/api/package.json ./package.json
+COPY --from=builder /app/apps/api/prisma ./prisma
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages/design-tokens/dist ./node_modules/@gatelite/design-tokens/dist
+COPY --from=builder /app/packages/config ./node_modules/@gatelite/config
+
+# Generate Prisma client
+RUN npx prisma generate
+
+EXPOSE 4000
+
+CMD ["node", "dist/main.js"]

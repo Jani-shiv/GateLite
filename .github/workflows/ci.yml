@@ -1,0 +1,248 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8.10.0'
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build design tokens
+        run: pnpm --filter=@gatelite/design-tokens run build
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Run typecheck
+        run: pnpm typecheck
+
+  test-api:
+    name: Test API
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: gatelite
+          POSTGRES_PASSWORD: gatelite
+          POSTGRES_DB: gatelite_test
+        ports: 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gatelite -d gatelite_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build design tokens
+        run: pnpm --filter=@gatelite/design-tokens run build
+
+      - name: Generate Prisma client
+        run: pnpm --filter=@gatelite/api run prisma:generate
+        env:
+          DATABASE_URL: postgresql://gatelite:gatelite@localhost:5432/gatelite_test
+
+      - name: Run database migrations
+        run: pnpm --filter=@gatelite/api run prisma:migrate:prod
+        env:
+          DATABASE_URL: postgresql://gatelite:gatelite@localhost:5432/gatelite_test
+
+      - name: Run API tests
+        run: pnpm --filter=@gatelite/api run test
+        env:
+          DATABASE_URL: postgresql://gatelite:gatelite@localhost:5432/gatelite_test
+          REDIS_URL: redis://localhost:6379
+          JWT_ACCESS_SECRET: test-access-secret
+          JWT_REFRESH_SECRET: test-refresh-secret
+          PASS_SIGNING_KEY: test-signing-key
+          OTP_PROVIDER: mock
+
+  test-admin:
+    name: Test Admin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build design tokens
+        run: pnpm --filter=@gatelite/design-tokens run build
+
+      - name: Run admin tests
+        run: pnpm --filter=@gatelite/admin run test
+
+  build-api:
+    name: Build API Docker
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, test-api]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build API image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: infra/docker/Dockerfile.api
+          push: false
+          tags: gatelite/api:${{ github.sha }}
+          load: true
+
+  build-admin:
+    name: Build Admin Docker
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, test-admin]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Admin image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: infra/docker/Dockerfile.admin
+          push: false
+          tags: gatelite/admin:${{ github.sha }}
+          load: true
+
+  secret-scan:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+
+  dependency-scan:
+    name: Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run audit
+        run: pnpm audit --prod
+
+  docker-compose-test:
+    name: Docker Compose Test
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, test-api, test-admin]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start services
+        run: docker compose -f infra/docker/docker-compose.yml up -d
+        env:
+          JWT_ACCESS_SECRET: dev-access-secret
+          JWT_REFRESH_SECRET: dev-refresh-secret
+          PASS_SIGNING_KEY: dev-signing-key
+
+      - name: Wait for services
+        run: |
+          sleep 30
+          curl -f http://localhost:4000/v1/healthz || exit 1
+          curl -f http://localhost:3000 || exit 1
+
+      - name: Run smoke tests
+        run: |
+          # Test API health
+          curl -f http://localhost:4000/v1/healthz
+          # Test admin loads
+          curl -f http://localhost:3000
+
+      - name: Stop services
+        run: docker compose -f infra/docker/docker-compose.yml down -v
+        if: always()

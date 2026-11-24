@@ -1,0 +1,376 @@
+/* Import design tokens CSS variables */
+@import '../../packages/design-tokens/dist/css-variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-ink;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  :focus-visible {
+    @apply outline-none ring-3 ring-ink ring-offset-3 ring-offset-lilac;
+  }
+  
+  ::selection {
+    @apply bg-mint text-ink;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-ink;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  :focus-visible {
+    @apply outline-none ring-3 ring-ink ring-offset-3 ring-offset-lilac;
+  }
+  
+  ::selection {
+    @apply bg-mint text-ink;
+  }
+}
+
+@layer components {
+  /* BrutalButton */
+  .btn {
+    @apply inline-flex items-center justify-center font-body font-medium transition-all duration-fast ease-out
+         border-3 border-ink shadow-card
+         min-h-[48px] min-w-[48px] px-6 py-3
+         active:translate-x-[2px] active:translate-y-[2px] active:shadow-pressed
+         hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-hero
+         focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ink focus-visible:ring-offset-3 focus-visible:ring-offset-lilac
+         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-card;
+  }
+  
+  .btn-primary {
+    @apply btn bg-mint text-ink;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-lilac text-ink;
+  }
+  
+  .btn-danger {
+    @apply btn bg-rose text-ink;
+  }
+  
+  .btn-ghost {
+    @apply btn bg-transparent text-ink hover:bg-ink/5;
+  }
+  
+  .btn-xl {
+    @apply text-xl px-8 py-4 min-h-[56px] min-w-[56px];
+  }
+  
+  .btn-lg {
+    @apply text-lg px-7 py-3.5 min-h-[52px] min-w-[52px];
+  }
+  
+  .btn-md {
+    @apply text-base px-6 py-3 min-h-[48px] min-w-[48px];
+  }
+  
+  .btn-sm {
+    @apply text-sm px-4 py-2 min-h-[40px] min-w-[40px];
+  }
+  
+  /* BrutalCard */
+  .card {
+    @apply bg-white border-3 border-ink shadow-card rounded-[12px] p-6 transition-all duration-fast ease-out;
+  }
+  
+  .card-hover {
+    @apply card hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-hero;
+  }
+  
+  /* BrutalInput */
+  .input {
+    @apply w-full bg-white border-3 border-ink rounded-[12px] px-4 py-3 text-base font-body text-ink
+           placeholder:text-ink/50
+           focus:outline-none focus:border-lilac focus:ring-3 focus:ring-ink focus:ring-offset-3 focus:ring-offset-lilac
+           disabled:bg-ink/5 disabled:cursor-not-allowed
+           transition-all duration-fast ease-out;
+  }
+  
+  .input-error {
+    @apply input border-rose focus:border-tomato focus:ring-tomato;
+  }
+  
+  /* BrutalSelect */
+  .select {
+    @apply input appearance-none bg-no-repeat pr-12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23111111' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 12px center;
+  }
+  
+  /* BrutalChip */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-[999px] border-3 border-ink px-3 py-1.5 text-sm font-medium font-body
+           shadow-chip transition-all duration-fast ease-out
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-pressed;
+  }
+  
+  .chip-primary {
+    @apply chip bg-mint text-ink;
+  }
+  
+  .chip-secondary {
+    @apply chip bg-lilac text-ink;
+  }
+  
+  .chip-danger {
+    @apply chip bg-rose text-ink;
+  }
+  
+  .chip-warning {
+    @apply chip bg-butter text-ink;
+  }
+  
+  .chip-info {
+    @apply chip bg-sky text-ink;
+  }
+  
+  .chip-ghost {
+    @apply chip bg-transparent text-ink;
+  }
+  
+  /* BrutalBadge */
+  .badge {
+    @apply inline-flex items-center justify-center rounded-[999px] border-3 border-ink px-2.5 py-0.5 text-xs font-bold font-mono
+           shadow-chip;
+  }
+  
+  .badge-primary {
+    @apply badge bg-mint text-ink;
+  }
+  
+  .badge-secondary {
+    @apply badge bg-lilac text-ink;
+  }
+  
+  .badge-danger {
+    @apply badge bg-rose text-ink;
+  }
+  
+  .badge-warning {
+    @apply badge bg-butter text-ink;
+  }
+  
+  .badge-info {
+    @apply badge bg-sky text-ink;
+  }
+  
+  /* StatusStamp */
+  .status-stamp {
+    @apply inline-flex items-center justify-center rounded-[12px] border-3 border-ink px-3 py-1.5 text-sm font-bold font-body
+           rotate-[-3deg] shadow-chip;
+  }
+  
+  .status-approved {
+    @apply status-stamp bg-mint text-ink;
+  }
+  
+  .status-denied {
+    @apply status-stamp bg-rose text-ink;
+  }
+  
+  .status-pending {
+    @apply status-stamp bg-butter text-ink;
+  }
+  
+  .status-entered {
+    @apply status-stamp bg-sky text-ink;
+  }
+  
+  .status-exited {
+    @apply status-stamp bg-lilac text-ink;
+  }
+  
+  /* OtpBoxes */
+  .otp-boxes {
+    @apply flex gap-2;
+  }
+  
+  .otp-box {
+    @apply w-12 h-16 text-center text-2xl font-bold font-mono text-ink
+           bg-white border-3 border-ink rounded-[12px] shadow-chip
+           focus:outline-none focus:border-lilac focus:ring-3 focus:ring-ink focus:ring-offset-3 focus:ring-offset-lilac;
+  }
+  
+  /* BottomNav */
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around
+           bg-white border-t-3 border-ink shadow-hero p-2 safe-area-bottom;
+  }
+  
+  .bottom-nav-item {
+    @apply flex flex-col items-center gap-1 px-3 py-2 text-sm font-medium font-body text-ink/60
+           min-h-[48px] min-w-[48px] rounded-[12px]
+           transition-all duration-fast ease-out
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-pressed;
+  }
+  
+  .bottom-nav-item-active {
+    @apply bottom-nav-item text-ink bg-mint border-3 border-ink shadow-card;
+  }
+  
+  /* ToastSticker */
+  .toast-sticker {
+    @apply fixed bottom-24 left-4 right-4 z-[400] flex items-center gap-3 p-4
+           bg-white border-3 border-ink shadow-hero rounded-[12px]
+           animate-slide-up;
+  }
+  
+  .toast-success {
+    @apply toast-sticker border-mint bg-mint/10;
+  }
+  
+  .toast-error {
+    @apply toast-sticker border-rose bg-rose/10;
+  }
+  
+  .toast-warning {
+    @apply toast-sticker border-butter bg-butter/10;
+  }
+  
+  .toast-info {
+    @apply toast-sticker border-sky bg-sky/10;
+  }
+  
+  /* EmptyState */
+  .empty-state {
+    @apply flex flex-col items-center justify-center gap-4 p-8 text-center;
+  }
+  
+  .empty-state-illustration {
+    @apply w-32 h-32 text-ink/30;
+  }
+  
+  .empty-state-title {
+    @apply text-xl font-bold font-heading text-ink;
+  }
+  
+  .empty-state-description {
+    @apply text-base font-body text-ink/60 max-w-xs;
+  }
+  
+  /* ApprovalSheet */
+  .approval-sheet {
+    @apply fixed inset-0 z-[300] flex items-end justify-center bg-ink/50 backdrop-blur-sm p-4;
+  }
+  
+  .approval-sheet-content {
+    @apply w-full max-w-md bg-white border-3 border-ink shadow-hero rounded-t-[24px] p-6
+           animate-slide-up;
+  }
+  
+  .approval-sheet-header {
+    @apply flex items-center justify-between mb-4;
+  }
+  
+  .approval-sheet-visitor {
+    @apply flex items-center gap-4 mb-6;
+  }
+  
+  .approval-sheet-avatar {
+    @apply w-20 h-20 rounded-[12px] border-3 border-ink bg-sky/20 flex items-center justify-center overflow-hidden;
+  }
+  
+  .approval-sheet-name {
+    @apply text-2xl font-bold font-heading text-ink;
+  }
+  
+  .approval-sheet-purpose {
+    @apply text-base font-body text-ink/70;
+  }
+  
+  .approval-sheet-actions {
+    @apply flex gap-3 mt-6;
+  }
+  
+  .approval-sheet-btn {
+    @apply flex-1 btn-xl;
+  }
+  
+  /* Animations */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 150ms ease-out forwards;
+  }
+  
+  @keyframes sticker-pop {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .animate-sticker-pop {
+    animation: sticker-pop 180ms ease-out forwards;
+  }
+  
+  /* Guard app specific - larger touch targets */
+  .guard-touch-target {
+    @apply min-h-[56px] min-w-[56px];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .font-heading {
+    font-family: var(--font-family-heading);
+  }
+  
+  .font-body {
+    font-family: var(--font-family-body);
+  }
+  
+  .font-mono {
+    font-family: var(--font-family-mono);
+  }
+  
+  .shadow-brutal {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-brutal-hero {
+    box-shadow: var(--shadow-hero);
+  }
+  
+  .shadow-brutal-chip {
+    box-shadow: var(--shadow-chip);
+  }
+}

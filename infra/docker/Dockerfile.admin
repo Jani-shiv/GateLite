@@ -1,0 +1,32 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY packages/config ./packages/config
+COPY packages/design-tokens ./packages/design-tokens
+COPY apps/admin ./apps/admin
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Build design tokens
+RUN pnpm --filter=@gatelite/design-tokens run build
+
+# Build admin
+RUN pnpm --filter=@gatelite/admin run build
+
+# Production stage (using nginx for static files)
+FROM nginx:alpine AS runner
+
+COPY --from=builder /app/apps/admin/dist /usr/share/nginx/html
+COPY infra/docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
+
+CMD ["nginx", "-g", "daemon off;"]

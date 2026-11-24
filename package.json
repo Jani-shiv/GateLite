@@ -1,0 +1,31 @@
+{
+  "name": "gatelite",
+  "version": "0.0.1",
+  "private": true,
+  "description": "GateLite - Gated Community Management App",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "db:migrate": "turbo run db:migrate",
+    "db:seed": "turbo run db:seed",
+    "openapi:generate": "turbo run openapi:generate",
+    "tokens:build": "turbo run tokens:build --filter=design-tokens",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,yml,yaml,css,html,prisma}\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "prettier": "^3.1.0",
+    "turbo": "^1.11.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@8.10.0"
+}
