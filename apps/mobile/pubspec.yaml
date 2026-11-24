@@ -1,0 +1,96 @@
+name: gatelite_mobile
+description: GateLite Mobile App - Resident & Guard flavors
+version: 0.0.1+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  
+  # State management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+  
+  # Routing
+  go_router: ^13.0.1
+  
+  # HTTP & API
+  dio: ^5.4.0
+  retrofit: ^4.0.3
+  
+  # Local storage
+  drift: ^2.14.0
+  sqlite3_flutter_libs: ^0.5.18
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  
+  # Security
+  flutter_secure_storage: ^9.0.0
+  crypto: ^3.0.3
+  
+  # Camera & QR
+  camera: ^0.10.5+5
+  mobile_scanner: ^3.5.2
+  image_picker: ^1.0.4
+  
+  # Push notifications
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  flutter_local_notifications: ^16.3.2
+  
+  # Permissions
+  permission_handler: ^11.1.0
+  
+  # Connectivity
+  connectivity_plus: ^5.0.2
+  
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.2.1
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  riverpod_generator: ^2.3.9
+  retrofit_generator: ^8.0.6
+  drift_dev: ^2.14.0
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/i18n/
+
+flutter_gen:
+  output: lib/gen/
+  line_length: 80
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+
+flavors:
+  resident:
+    app_name: "GateLite"
+    application_id: "com.gatelite.resident"
+  guard:
+    app_name: "GateLite Guard"
+    application_id: "com.gatelite.guard"

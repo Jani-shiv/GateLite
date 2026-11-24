@@ -1,0 +1,1 @@
+export 'screens/notice_list_screen.dart';

@@ -1,0 +1,13 @@
+flutter_gen:
+  output: lib/gen/
+  line_length: 80
+  integrations:
+    flutter_svg: true
+  assets:
+    enabled: true
+    outputs:
+      class_name: Assets
+    fonts:
+      enabled: true
+      outputs:
+        class_name: Fonts
