@@ -1,0 +1,2439 @@
+{
+  "society_id": "green-valley-001",
+  "society_name": "Green Valley Society",
+  "blocks": [
+    {
+      "id": "block-a",
+      "name": "Block A",
+      "position": [
+        -60,
+        0,
+        0
+      ],
+      "buildings": [
+        {
+          "id": "block-a-bldg-1",
+          "name": "A-01",
+          "block_name": "Block A",
+          "position": [
+            -110,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#B8F2D0",
+          "flats": [
+            {
+              "flat_number": "A-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 436",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 620",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 230",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 213",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 356",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-202",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 773",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 998",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 649",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-302",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 292",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 804",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 887",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 114",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 325",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-404",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 713",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 508",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 219",
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-a-bldg-2",
+          "name": "A-02",
+          "block_name": "Block A",
+          "position": [
+            -85,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#B8F2D0",
+          "flats": [
+            {
+              "flat_number": "A-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 990",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 134",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-103",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-104",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 179",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-202",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 939",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 819",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 177",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 159",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-304",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-401",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-402",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 989",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 137",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-501",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 425",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 106",
+              "type": "FAMILY"
+            }
+          ]
+        },
+        {
+          "id": "block-a-bldg-3",
+          "name": "A-03",
+          "block_name": "Block A",
+          "position": [
+            -60,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#B8F2D0",
+          "flats": [
+            {
+              "flat_number": "A-101",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 418",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-103",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 808",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-201",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 268",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 930",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 287",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-302",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 123",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 243",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 486",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 113",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 165",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 513",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 403",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 707",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 657",
+              "type": "TENANT"
+            }
+          ]
+        },
+        {
+          "id": "block-a-bldg-4",
+          "name": "A-04",
+          "block_name": "Block A",
+          "position": [
+            -35,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#B8F2D0",
+          "flats": [
+            {
+              "flat_number": "A-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 604",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-103",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 832",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 841",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-202",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 937",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-204",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 297",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 111",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 761",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 834",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-402",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 510",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-404",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 124",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 533",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-503",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 737",
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-a-bldg-5",
+          "name": "A-05",
+          "block_name": "Block A",
+          "position": [
+            -10,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#B8F2D0",
+          "flats": [
+            {
+              "flat_number": "A-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 856",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 534",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 312",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-201",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 254",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 475",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-204",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 470",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 188",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-304",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 491",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 733",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "A-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 505",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 280",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-501",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "A-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 730",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "A-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 222",
+              "type": "OWNER"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "block-b",
+      "name": "Block B",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "buildings": [
+        {
+          "id": "block-b-bldg-1",
+          "name": "B-01",
+          "block_name": "Block B",
+          "position": [
+            -50,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#BFE3FF",
+          "flats": [
+            {
+              "flat_number": "B-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 881",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 746",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-104",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 718",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 400",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 448",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 355",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 973",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 546",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 733",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-304",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 568",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 606",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 822",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-404",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 466",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 803",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-504",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-b-bldg-2",
+          "name": "B-02",
+          "block_name": "Block B",
+          "position": [
+            -25,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#BFE3FF",
+          "flats": [
+            {
+              "flat_number": "B-101",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 308",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-104",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 345",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 713",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-203",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 408",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 320",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 822",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 751",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-304",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 746",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 686",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-403",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 944",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 137",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 941",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-503",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 742",
+              "type": "TENANT"
+            }
+          ]
+        },
+        {
+          "id": "block-b-bldg-3",
+          "name": "B-03",
+          "block_name": "Block B",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#BFE3FF",
+          "flats": [
+            {
+              "flat_number": "B-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 377",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-103",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 833",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 139",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 143",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 415",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-204",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 939",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 237",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 108",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 923",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 993",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 262",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 874",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 371",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 861",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 124",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 334",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-504",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-b-bldg-4",
+          "name": "B-04",
+          "block_name": "Block B",
+          "position": [
+            25,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#BFE3FF",
+          "flats": [
+            {
+              "flat_number": "B-101",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 646",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 847",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 117",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 411",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 720",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-203",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 304",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 834",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 125",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 401",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 631",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 508",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 516",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-404",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 968",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 509",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 333",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 334",
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-b-bldg-5",
+          "name": "B-05",
+          "block_name": "Block B",
+          "position": [
+            50,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#BFE3FF",
+          "flats": [
+            {
+              "flat_number": "B-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 425",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 813",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 356",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 481",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 531",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 503",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 469",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 530",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 717",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-302",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 422",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 616",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 535",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 774",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 522",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "B-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 790",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 918",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 844",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "B-503",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "B-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 954",
+              "type": "OWNER"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "block-c",
+      "name": "Block C",
+      "position": [
+        60,
+        0,
+        0
+      ],
+      "buildings": [
+        {
+          "id": "block-c-bldg-1",
+          "name": "C-01",
+          "block_name": "Block C",
+          "position": [
+            10,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#D9C6FF",
+          "flats": [
+            {
+              "flat_number": "C-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 464",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 589",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 969",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 610",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 923",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 802",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 263",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-301",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 168",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 511",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 601",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-401",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 530",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 726",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 265",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-501",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-503",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-504",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            }
+          ]
+        },
+        {
+          "id": "block-c-bldg-2",
+          "name": "C-02",
+          "block_name": "Block C",
+          "position": [
+            35,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#D9C6FF",
+          "flats": [
+            {
+              "flat_number": "C-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 235",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 466",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 207",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "C-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 558",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-201",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-202",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 671",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 759",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 330",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 438",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 200",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 845",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-401",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-402",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 893",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 370",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-501",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 414",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-504",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-c-bldg-3",
+          "name": "C-03",
+          "block_name": "Block C",
+          "position": [
+            60,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#D9C6FF",
+          "flats": [
+            {
+              "flat_number": "C-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 411",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 363",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 626",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-104",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 797",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 707",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "C-203",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "C-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 218",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 333",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 979",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-303",
+              "floor": 3,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 759",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-401",
+              "floor": 4,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 633",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 183",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 901",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 863",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 337",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 410",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 760",
+              "type": "TENANT"
+            }
+          ]
+        },
+        {
+          "id": "block-c-bldg-4",
+          "name": "C-04",
+          "block_name": "Block C",
+          "position": [
+            85,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#D9C6FF",
+          "flats": [
+            {
+              "flat_number": "C-101",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-102",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-103",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-104",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 130",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 509",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "C-202",
+              "floor": 2,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 418",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 259",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 951",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 221",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 535",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 567",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 882",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 876",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 404",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 955",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 759",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-502",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-503",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 526",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 782",
+              "type": "OWNER"
+            }
+          ]
+        },
+        {
+          "id": "block-c-bldg-5",
+          "name": "C-05",
+          "block_name": "Block C",
+          "position": [
+            110,
+            0,
+            0
+          ],
+          "dimensions": [
+            18,
+            25,
+            12
+          ],
+          "floors": 5,
+          "flats_per_floor": 4,
+          "color": "#D9C6FF",
+          "flats": [
+            {
+              "flat_number": "C-101",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 522",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-102",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 141",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-103",
+              "floor": 1,
+              "occupied": true,
+              "resident": "Resident 137",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-104",
+              "floor": 1,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-201",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 889",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-202",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 580",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-203",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 321",
+              "type": "FAMILY"
+            },
+            {
+              "flat_number": "C-204",
+              "floor": 2,
+              "occupied": true,
+              "resident": "Resident 647",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-301",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 116",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-302",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 543",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-303",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 476",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-304",
+              "floor": 3,
+              "occupied": true,
+              "resident": "Resident 657",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-401",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 610",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-402",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 864",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-403",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 846",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-404",
+              "floor": 4,
+              "occupied": true,
+              "resident": "Resident 989",
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-501",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 567",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-502",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 273",
+              "type": "TENANT"
+            },
+            {
+              "flat_number": "C-503",
+              "floor": 5,
+              "occupied": false,
+              "resident": null,
+              "type": "OWNER"
+            },
+            {
+              "flat_number": "C-504",
+              "floor": 5,
+              "occupied": true,
+              "resident": "Resident 146",
+              "type": "TENANT"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
