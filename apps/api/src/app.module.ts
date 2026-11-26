@@ -14,6 +14,7 @@ import { AmenitiesModule } from './amenities/amenities.module';
 import { BillingModule } from './billing/billing.module';
 import { DevicesModule } from './devices/devices.module';
 import { AuditModule } from './audit/audit.module';
+import { ResidentsModule } from './residents/residents.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AuditModule } from './audit/audit.module';
     BillingModule,
     DevicesModule,
     AuditModule,
+    ResidentsModule,
   ],
   providers: [
     {

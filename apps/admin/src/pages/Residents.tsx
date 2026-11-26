@@ -2,14 +2,7 @@ import { Plus, Search, Filter, User, Download, Upload, X, FileText, CheckCircle,
 import { Card } from '../components/ui/Card';
 import { DataTable } from '../components/ui/DataTable';
 import { useState } from 'react';
-
-const residents = [
-  { id: '1', name: 'Rajesh Patel', flat: 'A-101', block: 'A', phone: '+91 98765 43210', role: 'OWNER', status: 'active', email: 'rajesh@example.com' },
-  { id: '2', name: 'Priya Sharma', flat: 'A-102', block: 'A', phone: '+91 98765 43211', role: 'OWNER', status: 'active', email: 'priya@example.com' },
-  { id: '3', name: 'Amit Kumar', flat: 'B-201', block: 'B', phone: '+91 98765 43212', role: 'TENANT', status: 'active', email: 'amit@example.com' },
-  { id: '4', name: 'Sunita Devi', flat: 'B-202', block: 'B', phone: '+91 98765 43213', role: 'FAMILY', status: 'active', email: 'sunita@example.com' },
-  { id: '5', name: 'Vikram Singh', flat: 'C-301', block: 'C', phone: '+91 98765 43214', role: 'OWNER', status: 'pending', email: 'vikram@example.com' },
-];
+import { useResidents, useImportResidents, Resident } from '../hooks/useResidents';
 
 const roleConfig = {
   OWNER: { label: 'OWNER', class: 'badge-primary' },
@@ -35,8 +28,13 @@ export function Residents() {
   const [csvText, setCsvText] = useState(CSV_TEMPLATE);
   const [previewData, setPreviewData] = useState<Array<Record<string, string>>>([]);
   const [importErrors, setImportErrors] = useState<string[]>([]);
-  const [importing, setImporting] = useState(false);
-  const [importResult, setImportResult] = useState<{ imported: number; errors: string[] } | null>(null);
+
+  const { data: residentsResponse, isLoading, error, refetch } = useResidents({
+    page: 1,
+    limit: 50,
+  });
+
+  const importResidentsMutation = useImportResidents();
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -78,23 +76,17 @@ export function Residents() {
   };
 
   const handleConfirmImport = async () => {
-    setImporting(true);
     try {
-      const response = await fetch('/api/v1/residents/import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ csv: csvText }),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Import failed');
-      setImportResult({ imported: result.imported, errors: result.errors });
+      await importResidentsMutation.mutateAsync();
+      setImportResult({ imported: previewData.length, errors: [] });
       setImportStep('confirm');
+      refetch();
     } catch (error) {
       setImportErrors([error instanceof Error ? error.message : 'Import failed']);
-    } finally {
-      setImporting(false);
     }
   };
+
+  const [importResult, setImportResult] = useState<{ imported: number; errors: string[] } | null>(null);
 
   const handleDownloadTemplate = () => {
     const blob = new Blob([CSV_TEMPLATE], { type: 'text/csv' });
@@ -114,6 +106,9 @@ export function Residents() {
     setImportErrors([]);
     setImportResult(null);
   };
+
+  const residents = residentsResponse?.data || [];
+  const total = residentsResponse?.total || 0;
 
   return (
     <div className="space-y-6">
@@ -156,44 +151,63 @@ export function Residents() {
           </button>
         </div>
 
-        <DataTable
-          columns={[
-            { key: 'name', header: 'Resident' },
-            { key: 'flat', header: 'Flat', width: 'w-24' },
-            { key: 'block', header: 'Block', width: 'w-20', align: 'center' },
-            { key: 'phone', header: 'Phone' },
-            { key: 'role', header: 'Role', width: 'w-24' },
-            { key: 'status', header: 'Status', width: 'w-24' },
-          ]}
-          data={residents}
-          renderCell={(row, column) => {
-            if (column.key === 'name') {
-              return (
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-[999px] bg-sky/20 border-2 border-sky flex items-center justify-center">
-                    <User className="w-5 h-5 text-sky" />
-                  </div>
-                  <div>
-                    <p className="font-medium font-body text-ink">{row.name}</p>
-                    <p className="text-xs font-body text-ink/50">{row.email}</p>
-                  </div>
-                </div>
-              );
-            }
-            if (column.key === 'role') {
-              const config = roleConfig[row.role as keyof typeof roleConfig];
-              return <span className={`${config.class}`}>{config.label}</span>;
-            }
-            if (column.key === 'status') {
-              const config = statusConfig[row.status as keyof typeof statusConfig];
-              return <span className={`${config.class}`}>{config.label}</span>;
-            }
-            if (column.key === 'phone') {
-              return <span className="font-mono text-sm text-ink/80">{row.phone}</span>;
-            }
-            return <span className="text-ink/80">{row[column.key as keyof typeof row]}</span>;
-          }}
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-mint" />
+            <span className="ml-3 font-body text-ink/60">Loading residents...</span>
+          </div>
+        ) : error ? (
+          <div className="empty-state">
+            <AlertCircle className="empty-state-illustration text-rose" />
+            <p className="empty-state-title">Failed to load residents</p>
+            <p className="empty-state-description">{error instanceof Error ? error.message : 'Unknown error'}</p>
+            <button className="btn btn-primary btn-md" onClick={() => refetch()}>Retry</button>
+          </div>
+        ) : (
+          <>
+            <DataTable
+              columns={[
+                { key: 'name', header: 'Resident' },
+                { key: 'flat', header: 'Flat', width: 'w-24' },
+                { key: 'block', header: 'Block', width: 'w-20', align: 'center' },
+                { key: 'phone', header: 'Phone' },
+                { key: 'role', header: 'Role', width: 'w-24' },
+                { key: 'status', header: 'Status', width: 'w-24' },
+              ]}
+              data={residents}
+              renderCell={(row, column) => {
+                if (column.key === 'name') {
+                  return (
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-[999px] bg-sky/20 border-2 border-sky flex items-center justify-center">
+                        <User className="w-5 h-5 text-sky" />
+                      </div>
+                      <div>
+                        <p className="font-medium font-body text-ink">{row.name}</p>
+                        <p className="text-xs font-body text-ink/50">{row.email || 'No email'}</p>
+                      </div>
+                    </div>
+                  );
+                }
+                if (column.key === 'role') {
+                  const config = roleConfig[row.role as keyof typeof roleConfig];
+                  return <span className={`${config.class}`}>{config.label}</span>;
+                }
+                if (column.key === 'status') {
+                  const config = statusConfig[row.status as keyof typeof statusConfig];
+                  return <span className={`${config.class}`}>{config.label}</span>;
+                }
+                if (column.key === 'phone') {
+                  return <span className="font-mono text-sm text-ink/80">{row.phone}</span>;
+                }
+                return <span className="text-ink/80">{row[column.key as keyof typeof row]}</span>;
+              }}
+            />
+            {total > residents.length && (
+              <p className="text-center text-sm text-ink/50 mt-4">Showing {residents.length} of {total} residents</p>
+            )}
+          </>
+        )}
       </Card>
 
       {/* Import CSV Modal */}
@@ -336,8 +350,8 @@ export function Residents() {
                     <button className="btn btn-ghost btn-md" onClick={() => setImportStep('upload')}>
                       Back
                     </button>
-                    <button className="btn btn-primary btn-md" onClick={handleConfirmImport} disabled={importing || importErrors.length > 0}>
-                      {importing ? (
+                    <button className="btn btn-primary btn-md" onClick={handleConfirmImport} disabled={importResidentsMutation.isPending || importErrors.length > 0}>
+                      {importResidentsMutation.isPending ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
                           Importing...
@@ -377,12 +391,12 @@ export function Residents() {
                       Done
                     </button>
                   </div>
-      </div>
-    )}
+            </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-  </div>
-)}
-</div>
-);
-  }
+  );
+}

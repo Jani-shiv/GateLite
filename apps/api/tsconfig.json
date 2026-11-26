@@ -6,7 +6,8 @@
       "@/*": ["src/*"]
     },
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "noEmit": false
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "dist", "prisma"]

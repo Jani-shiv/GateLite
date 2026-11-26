@@ -21,7 +21,7 @@
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
     "db:seed": "ts-node --esm prisma/seed.ts",
-    "openapi:generate": "nest build && node scripts/generate-openapi.js"
+    "openapi:generate": "nest build && node scripts/generate-openapi.cjs"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

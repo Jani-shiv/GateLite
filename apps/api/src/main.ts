@@ -41,6 +41,7 @@ async function bootstrap() {
     .addBearerAuth()
     .addTag('auth', 'Authentication')
     .addTag('societies', 'Society Management')
+    .addTag('residents', 'Resident Management')
     .addTag('visits', 'Visitor Management')
     .addTag('passes', 'Pre-approval Passes')
     .addTag('notices', 'Notice Board')
@@ -48,6 +49,10 @@ async function bootstrap() {
     .addTag('staff', 'Staff Management')
     .addTag('amenities', 'Amenity Booking')
     .addTag('billing', 'Billing & Payments')
+    .addTag('audit', 'Audit Logs')
+    .addTag('devices', 'Device Management')
+    .addTag('blocks', 'Block Management')
+    .addTag('flats', 'Flat Management')
     .build();
   
   const document = SwaggerModule.createDocument(app, config);

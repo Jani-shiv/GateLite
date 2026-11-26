@@ -9,24 +9,46 @@ import {
   Req,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
+import * as crypto from 'crypto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class SendOtpDto {
-  phone = '';
-  deviceId = '';
+  @IsString()
+  @MinLength(10)
+  @MaxLength(15)
+  phone!: string;
+
+  @IsOptional()
+  @IsString()
+  deviceId?: string;
 }
 
 class VerifyOtpDto {
-  phone = '';
-  code = '';
-  deviceId = '';
+  @IsString()
+  @MinLength(10)
+  @MaxLength(15)
+  phone!: string;
+
+  @IsString()
+  @MinLength(4)
+  @MaxLength(6)
+  code!: string;
+
+  @IsOptional()
+  @IsString()
+  deviceId?: string;
 }
 
 class RefreshTokenDto {
-  refreshToken = '';
-  deviceId = '';
+  @IsString()
+  refreshToken!: string;
+
+  @IsOptional()
+  @IsString()
+  deviceId?: string;
 }
 
 @ApiTags('auth')
@@ -40,7 +62,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'OTP sent successfully' })
   @ApiResponse({ status: 429, description: 'Too many requests' })
   async sendOtp(@Body() dto: SendOtpDto) {
-    await this.authService.sendOtp(dto.phone, dto.deviceId);
+    await this.authService.sendOtp(dto.phone, dto.deviceId || crypto.randomUUID());
     return { message: 'OTP sent successfully' };
   }
 
@@ -50,7 +72,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'OTP verified, tokens returned' })
   @ApiResponse({ status: 401, description: 'Invalid or expired OTP' })
   async verifyOtp(@Body() dto: VerifyOtpDto) {
-    return this.authService.verifyOtp(dto.phone, dto.code, dto.deviceId);
+    return this.authService.verifyOtp(dto.phone, dto.code, dto.deviceId || crypto.randomUUID());
   }
 
   @Post('refresh')
@@ -59,7 +81,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'New tokens returned' })
   @ApiResponse({ status: 401, description: 'Invalid refresh token' })
   async refresh(@Body() dto: RefreshTokenDto) {
-    return this.authService.refreshTokens(dto.refreshToken, dto.deviceId);
+    return this.authService.refreshTokens(dto.refreshToken, dto.deviceId || crypto.randomUUID());
   }
 
   @Post('revoke')

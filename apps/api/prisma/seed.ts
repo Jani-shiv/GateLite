@@ -1,17 +1,35 @@
 import { PrismaClient, MembershipRole, MembershipStatus, UserStatus, VisitState, VisitorType, TicketCategory, TicketStatus, TicketPriority, InvoiceStatus, PaymentStatus, BookingStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
+
+// Generate deterministic UUIDs for seed data
+const uuids = {
+  society: '11111111-1111-1111-1111-111111111111',
+  blockA: '22222222-2222-2222-2222-222222222222',
+  blockB: '33333333-3333-3333-3333-333333333333',
+  blockC: '44444444-4444-4444-4444-444444444444',
+  adminUser: '55555555-5555-5555-5555-555555555555',
+  guardUser: '66666666-6666-6666-6666-666666666666',
+  residentUser: '77777777-7777-7777-7777-777777777777',
+  residentUser2: '88888888-8888-8888-8888-888888888888',
+  staff1: '99999999-9999-9999-9999-999999999999',
+  staff2: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  gym: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+  clubhouse: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
+  tennis: 'dddddddd-dddd-dddd-dddd-dddddddddddd',
+};
 
 async function main() {
   console.log('🌱 Starting database seed...');
 
   // Create demo society
   const society = await prisma.society.upsert({
-    where: { id: 'demo-society-id' },
+    where: { id: uuids.society },
     update: {},
     create: {
-      id: 'demo-society-id',
+      id: uuids.society,
       name: 'Green Valley Society',
       address: 'SG Highway',
       city: 'Ahmedabad',
@@ -31,19 +49,19 @@ async function main() {
   // Create blocks
   const blocks = await Promise.all([
     prisma.block.upsert({
-      where: { id: 'block-a' },
+      where: { id: uuids.blockA },
       update: {},
-      create: { id: 'block-a', societyId: society.id, name: 'A' },
+      create: { id: uuids.blockA, societyId: society.id, name: 'A' },
     }),
     prisma.block.upsert({
-      where: { id: 'block-b' },
+      where: { id: uuids.blockB },
       update: {},
-      create: { id: 'block-b', societyId: society.id, name: 'B' },
+      create: { id: uuids.blockB, societyId: society.id, name: 'B' },
     }),
     prisma.block.upsert({
-      where: { id: 'block-c' },
+      where: { id: uuids.blockC },
       update: {},
-      create: { id: 'block-c', societyId: society.id, name: 'C' },
+      create: { id: uuids.blockC, societyId: society.id, name: 'C' },
     }),
   ]);
   console.log('✅ Blocks created:', blocks.map(b => b.name).join(', '));

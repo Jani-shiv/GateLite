@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@gatelite/api-client/*": ["../packages/api-client/dist/*"]
     }
   },
   "include": ["src"],

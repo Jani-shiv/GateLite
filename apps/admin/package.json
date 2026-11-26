@@ -23,7 +23,9 @@
     "zod": "^3.22.0",
     "lucide-react": "^0.294.0",
     "clsx": "^2.0.0",
-    "tailwind-merge": "^2.1.0"
+    "tailwind-merge": "^2.1.0",
+    "@gatelite/api-client": "workspace:*",
+    "openapi-fetch": "^0.10.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

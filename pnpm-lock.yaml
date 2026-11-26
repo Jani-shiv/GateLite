@@ -23,6 +23,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@gatelite/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@hookform/resolvers':
         specifier: ^3.3.0
         version: 3.10.0(react-hook-form@7.92.0)
@@ -35,6 +38,9 @@ importers:
       lucide-react:
         specifier: ^0.294.0
         version: 0.294.0(react@18.3.1)
+      openapi-fetch:
+        specifier: ^0.10.0
+        version: 0.10.6
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -221,6 +227,22 @@ importers:
         specifier: ^5.3.0
         version: 5.9.3
 
+  packages/api-client:
+    dependencies:
+      openapi-fetch:
+        specifier: ^0.10.0
+        version: 0.10.6
+    devDependencies:
+      '@gatelite/config':
+        specifier: workspace:*
+        version: link:../config
+      openapi-typescript-codegen:
+        specifier: ^0.23.0
+        version: 0.23.0
+      typescript:
+        specifier: ^5.3.0
+        version: 5.9.3
+
   packages/config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -321,6 +343,15 @@ packages:
       rxjs: 7.8.1
     transitivePeerDependencies:
       - chokidar
+    dev: true
+
+  /@apidevtools/json-schema-ref-parser@9.0.9:
+    resolution: {integrity: sha512-GBD2Le9w2+lVFoc4vswGI/TjkNIZSVp7+9xPf+X3uidBfWnAeUWmquteSyt0+VCrhNMWj/FTABISQrD3Z/YA+w==}
+    dependencies:
+      '@jsdevtools/ono': 7.1.3
+      '@types/json-schema': 7.0.15
+      call-me-maybe: 1.0.2
+      js-yaml: 4.3.2
     dev: true
 
   /@asamuzakjp/css-color@3.2.0:
@@ -1303,6 +1334,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.3
       '@jridgewell/sourcemap-codec': 1.6.0
+    dev: true
+
+  /@jsdevtools/ono@7.1.3:
+    resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: true
 
   /@ljharb/through@2.3.14:
@@ -3228,6 +3263,10 @@ packages:
       call-bind-apply-helpers: 1.0.2
       get-intrinsic: 1.3.0
 
+  /call-me-maybe@1.0.2:
+    resolution: {integrity: sha512-HpX65o1Hnr9HH25ojC1YGs7HCQLq0GCOibSaWER0eNpgJ/Z1MZv2mTc7+xh6WOPxbRVcmgbv4hGU+uSQ/2xFZQ==}
+    dev: true
+
   /callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
@@ -3423,6 +3462,11 @@ packages:
   /commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /commander@9.5.0:
+    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
+    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /comment-json@4.2.5:
@@ -5966,6 +6010,14 @@ packages:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
     dev: true
 
+  /json-schema-ref-parser@9.0.9:
+    resolution: {integrity: sha512-qcP2lmGy+JUoQJ4DOQeLaZDqH9qSkeGCK3suKWxJXS82dg728Mn3j97azDMaOUmJAN4uCq91LdPx4K7E8F1a7Q==}
+    engines: {node: '>=10'}
+    deprecated: Please switch to @apidevtools/json-schema-ref-parser
+    dependencies:
+      '@apidevtools/json-schema-ref-parser': 9.0.9
+    dev: true
+
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
     dev: true
@@ -6653,6 +6705,27 @@ packages:
     dependencies:
       mimic-fn: 4.0.0
     dev: true
+
+  /openapi-fetch@0.10.6:
+    resolution: {integrity: sha512-6xXfvIEL/POtLGOaFPsp3O+pDe+J3DZYxbD9BrsQHXOTeNK8z/gsWHT6adUy1KcpQOhmkerMzlQrJM6DbN55dQ==}
+    dependencies:
+      openapi-typescript-helpers: 0.0.11
+    dev: false
+
+  /openapi-typescript-codegen@0.23.0:
+    resolution: {integrity: sha512-gOJXy5g3H3HlLpVNN+USrNK2i2KYBmDczk9Xk34u6JorwrGiDJZUj+al4S+i9TXdfUQ/ZaLxE59Xf3wqkxGfqA==}
+    hasBin: true
+    dependencies:
+      camelcase: 6.3.0
+      commander: 9.5.0
+      fs-extra: 10.1.0
+      handlebars: 4.7.10
+      json-schema-ref-parser: 9.0.9
+    dev: true
+
+  /openapi-typescript-helpers@0.0.11:
+    resolution: {integrity: sha512-xofUHlVFq+BMquf3nh9I8N2guHckW6mrDO/F3kaFgrL7MGbjldDnQ9TIT+rkH/+H0LiuO+RuZLnNmsJwsjwUKg==}
+    dev: false
 
   /optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}

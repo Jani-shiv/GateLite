@@ -10,8 +10,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@gatelite/design-tokens': path.resolve(__dirname, '../../packages/design-tokens/dist'),
+      '@gatelite/api-client': './node_modules/@gatelite/api-client/dist/index.js',
+      '@gatelite/design-tokens': '../../packages/design-tokens/dist',
     },
+  },
+  optimizeDeps: {
+    include: ['@gatelite/api-client', '@gatelite/design-tokens'],
   },
   server: {
     port: 3000,
@@ -19,6 +23,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:4000',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
