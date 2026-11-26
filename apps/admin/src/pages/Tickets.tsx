@@ -1,130 +1,161 @@
-import { Search, Filter, Plus, Ticket, AlertTriangle, Clock, CheckCircle, User } from 'lucide-react';
+import { Plus, Search, Filter, Download, Upload, AlertTriangle, MessageSquare, Clock, TrendingUp, CheckCircle, XCircle, AlertTriangle as AlertTriangleIcon, FileText } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { DataTable } from '../components/ui/DataTable';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Badge } from '../components/ui/Badge';
 import { useState } from 'react';
 
 const tickets = [
-  { id: '#124', title: 'Water leakage in bathroom', flat: 'A-401', category: 'maintenance', priority: 'high', status: 'open', assignee: 'Unassigned', created: '2 hours ago' },
-  { id: '#123', title: 'Noise complaint - loud music', flat: 'B-205', category: 'noise', priority: 'medium', status: 'in_progress', assignee: 'Security Team', created: '5 hours ago' },
-  { id: '#122', title: 'Lift not working', flat: 'C-312', category: 'maintenance', priority: 'critical', status: 'open', assignee: 'Maintenance', created: '1 day ago' },
-  { id: '#121', title: 'Parking space dispute', flat: 'A-102', category: 'other', priority: 'low', status: 'resolved', assignee: 'Admin', created: '2 days ago' },
-  { id: '#120', title: 'Security guard rude behavior', flat: 'B-201', category: 'security', priority: 'medium', status: 'in_progress', assignee: 'Security Head', created: '3 days ago' },
+  { id: 'TKT-001', category: 'MAINTENANCE', priority: 'HIGH', status: 'OPEN', title: 'Water leakage in bathroom', flat: 'A-101', reporter: 'Rajesh Patel', createdAt: '2026-11-24 08:45', assignee: null },
+  { id: 'TKT-002', category: 'NOISE', priority: 'MEDIUM', status: 'IN_PROGRESS', title: 'Loud music from neighbor', flat: 'B-205', reporter: 'Priya Sharma', createdAt: '2026-11-24 09:15', assignee: 'Admin' },
+  { id: 'TKT-003', category: 'CLEANLINESS', priority: 'LOW', status: 'RESOLVED', title: 'Garbage not collected', flat: 'C-301', reporter: 'Amit Kumar', createdAt: '2026-11-23 14:20', assignee: 'Admin' },
+  { id: 'TKT-004', category: 'SECURITY', priority: 'HIGH', status: 'OPEN', title: 'Broken gate lock', flat: 'A-202', reporter: 'Sunita Devi', createdAt: '2026-11-24 11:30', assignee: null },
 ];
 
 const categoryConfig = {
-  maintenance: { label: 'MAINTENANCE', color: 'sky', icon: AlertTriangle },
-  noise: { label: 'NOISE', color: 'butter', icon: AlertTriangle },
-  security: { label: 'SECURITY', color: 'rose', icon: User },
-  other: { label: 'OTHER', color: 'lilac', icon: Ticket },
+  MAINTENANCE: { label: 'MAINTENANCE', color: 'bg-butter/10 text-butter border-butter' },
+  NOISE: { label: 'NOISE', color: 'bg-rose/10 text-rose border-rose' },
+  CLEANLINESS: { label: 'CLEANLINESS', color: 'bg-sky/10 text-sky border-sky' },
+  SECURITY: { label: 'SECURITY', color: 'bg-rose/10 text-rose border-rose' },
+  COMPLAINT: { label: 'COMPLAINT', color: 'bg-butter/10 text-butter border-butter' },
+  OTHER: { label: 'OTHER', color: 'bg-lilac/10 text-lilac border-lilac' },
 };
 
 const priorityConfig = {
-  critical: { label: 'CRITICAL', class: 'badge-danger' },
-  high: { label: 'HIGH', class: 'badge-warning' },
-  medium: { label: 'MEDIUM', class: 'badge-info' },
-  low: { label: 'LOW', class: 'badge-secondary' },
+  HIGH: { label: 'HIGH', class: 'badge-danger' },
+  MEDIUM: { label: 'MEDIUM', class: 'badge-warning' },
+  LOW: { label: 'LOW', class: 'badge-info' },
 };
 
 const statusConfig = {
-  open: { label: 'OPEN', class: 'status-pending', icon: <Clock className="w-3 h-3" /> },
-  in_progress: { label: 'IN PROGRESS', class: 'status-stamp bg-lilac text-ink', icon: <Ticket className="w-3 h-3" /> },
-  resolved: { label: 'RESOLVED', class: 'status-approved', icon: <CheckCircle className="w-3 h-3" /> },
-  closed: { label: 'CLOSED', class: 'status-stamp bg-sky text-ink', icon: <CheckCircle className="w-3 h-3" /> },
+  OPEN: { label: 'OPEN', class: 'badge-warning', icon: AlertTriangleIcon },
+  IN_PROGRESS: { label: 'IN PROGRESS', class: 'badge-info', icon: Clock },
+  RESOLVED: { label: 'RESOLVED', class: 'badge-primary', icon: CheckCircle },
+  CLOSED: { label: 'CLOSED', class: 'badge-secondary', icon: CheckCircle },
 };
 
 export function Tickets() {
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-heading text-ink">Tickets & Complaints</h1>
-          <p className="text-ink/60 font-body mt-1">Track and manage all resident complaints and tickets</p>
+          <h1 className="text-3xl font-bold font-heading text-ink">Complaints & Tickets</h1>
+          <p className="text-ink/60 font-body mt-1">Manage and track resident complaints</p>
         </div>
-        <button className="btn btn-primary btn-md">
-          <Plus className="w-4 h-4 mr-2" />
-          Create Ticket
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="ghost" size="md" leftIcon={<Download className="w-4 h-4" />}>Export CSV</Button>
+          <Button variant="primary" size="md" leftIcon={<Plus className="w-4 h-4" />}>New Ticket</Button>
+        </div>
       </div>
-      
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <Card className="bg-mint/10 border-mint">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium font-body text-ink/70">Total Tickets</p>
+              <p className="text-3xl font-bold font-heading text-ink mt-1">247</p>
+            </div>
+            <div className="w-12 h-12 rounded-[12px] border-3 border-ink bg-mint flex items-center justify-center">
+              <FileText className="w-6 h-6 text-ink" />
+            </div>
+          </div>
+        </Card>
+        <Card className="bg-rose/10 border-rose">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium font-body text-ink/70">Open</p>
+              <p className="text-3xl font-bold font-heading text-ink mt-1">12</p>
+            </div>
+            <div className="w-12 h-12 rounded-[12px] border-3 border-ink bg-rose flex items-center justify-center">
+              <AlertTriangle className="w-6 h-6 text-ink" />
+            </div>
+          </div>
+        </Card>
+        <Card className="bg-sky/10 border-sky">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium font-body text-ink/70">In Progress</p>
+              <p className="text-3xl font-bold font-heading text-ink mt-1">8</p>
+            </div>
+            <div className="w-12 h-12 rounded-[12px] border-3 border-ink bg-sky flex items-center justify-center">
+              <Clock className="w-6 h-6 text-ink" />
+            </div>
+          </div>
+        </Card>
+        <Card className="bg-butter/10 border-butter">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium font-body text-ink/70">Resolved Today</p>
+              <p className="text-3xl font-bold font-heading text-ink mt-1">5</p>
+            </div>
+            <div className="w-12 h-12 rounded-[12px] border-3 border-ink bg-butter flex items-center justify-center">
+              <CheckCircle className="w-6 h-6 text-ink" />
+            </div>
+          </div>
+        </Card>
+      </div>
+
       <Card>
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink/40" />
-            <input
+            <Input
               type="text"
               placeholder="Search tickets..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="input pl-10"
+              className="pl-10"
             />
           </div>
-          <div className="flex gap-2">
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="select"
-            >
-              <option value="all">All Status</option>
-              <option value="open">Open</option>
-              <option value="in_progress">In Progress</option>
-              <option value="resolved">Resolved</option>
-              <option value="closed">Closed</option>
-            </select>
-            <button className="btn btn-ghost btn-md flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              More Filters
-            </button>
-          </div>
+          <Button variant="ghost" size="md" leftIcon={<Filter className="w-4 h-4" />}>Filters</Button>
         </div>
-        
+
         <DataTable
           columns={[
-            { key: 'id', header: 'ID', width: 'w-20' },
-            { key: 'title', header: 'Title' },
-            { key: 'flat', header: 'Flat', width: 'w-24' },
-            { key: 'category', header: 'Category', width: 'w-32' },
+            { key: 'id', header: 'Ticket ID', width: 'w-28' },
+            { key: 'category', header: 'Category', width: 'w-28' },
             { key: 'priority', header: 'Priority', width: 'w-24' },
             { key: 'status', header: 'Status', width: 'w-32' },
+            { key: 'title', header: 'Title' },
+            { key: 'flat', header: 'Flat', width: 'w-24' },
+            { key: 'reporter', header: 'Reporter', width: 'w-32' },
+            { key: 'createdAt', header: 'Created', width: 'w-36' },
             { key: 'assignee', header: 'Assignee', width: 'w-28' },
-            { key: 'created', header: 'Created', width: 'w-28' },
           ]}
           data={tickets}
           renderCell={(row, column) => {
             if (column.key === 'category') {
               const config = categoryConfig[row.category as keyof typeof categoryConfig];
-              const Icon = config.icon;
-              return (
-                <span className={`chip chip-${config.color} inline-flex items-center gap-1`}>
-                  <Icon className="w-3 h-3" />
-                  {config.label}
-                </span>
-              );
+              return <Badge variant="ghost" className={config?.color}>{config?.label}</Badge>;
             }
             if (column.key === 'priority') {
               const config = priorityConfig[row.priority as keyof typeof priorityConfig];
-              return <span className={`${config.class}`}>{config.label}</span>;
+              return <Badge variant="ghost" className={config?.class}>{config?.label}</Badge>;
             }
             if (column.key === 'status') {
               const config = statusConfig[row.status as keyof typeof statusConfig];
               return (
-                <span className={`${config.class} inline-flex items-center gap-1`}>
-                  {config.icon}
-                  {config.label}
-                </span>
+                <Badge variant="ghost" className={config?.class} leftIcon={<config.icon className="w-3 h-3" />}>
+                  {config?.label}
+                </Badge>
               );
-            }
-            if (column.key === 'id') {
-              return <span className="font-mono font-medium text-ink">{row.id}</span>;
-            }
-            if (column.key === 'title') {
-              return <span className="font-medium font-body text-ink max-w-xs truncate block">{row.title}</span>;
             }
             return <span className="text-ink/80">{row[column.key as keyof typeof row]}</span>;
           }}
         />
+      </Card>
+
+      <Card>
+        <h2 className="text-xl font-bold font-heading text-ink mb-4">Quick Actions</h2>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="primary" size="md" leftIcon={<Plus className="w-4 h-4" />}>Create Ticket</Button>
+          <Button variant="secondary" size="md" leftIcon={<MessageSquare className="w-4 h-4" />}>Add Comment</Button>
+          <Button variant="ghost" size="md" borderColor="lilac" textColor="lilac" hoverBg="lilac/10" leftIcon={<TrendingUp className="w-4 h-4" />}>View Analytics</Button>
+          <Button variant="ghost" size="md" borderColor="butter" textColor="butter" hoverBg="butter/10" leftIcon={<AlertTriangle className="w-4 h-4" />}>Escalate</Button>
+        </div>
       </Card>
     </div>
   );

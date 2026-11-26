@@ -1,16 +1,8 @@
-import { 
-  Users, 
-  UserCheck, 
-  Ticket, 
-  AlertTriangle,
-  TrendingUp,
-  Clock,
-  CheckCircle,
-  XCircle
-} from 'lucide-react';
+import { Users, UserCheck, Ticket, AlertTriangle, TrendingUp, Clock, CheckCircle, XCircle, Calendar, Building2, DollarSign, FileText, Bell, Shield, Package, Car, Megaphone, TrendingUp as TrendingUpIcon } from 'lucide-react';
 import { Card } from '../components/ui/Card';
-import { StatCard } from '../components/ui/StatCard';
 import { DataTable } from '../components/ui/DataTable';
+import { Button } from '../components/ui/Button';
+import { StatCard } from '../components/ui/StatCard';
 
 const stats = [
   { label: 'Total Residents', value: '1,247', icon: Users, trend: '+12%', trendUp: true, color: 'mint' as const },
@@ -28,51 +20,41 @@ const recentActivity = [
   { time: '08:15', type: 'notice', description: 'Notice published: Maintenance Schedule', status: 'published', user: 'Admin' },
 ];
 
-const statusConfig: Record<string, { label: string; class: string; icon: React.ReactNode }> = {
-  approved: { label: 'APPROVED', class: 'status-approved', icon: <CheckCircle className="w-3 h-3" /> },
-  denied: { label: 'DENIED', class: 'status-denied', icon: <XCircle className="w-3 h-3" /> },
-  entered: { label: 'ENTERED', class: 'status-entered', icon: <CheckCircle className="w-3 h-3" /> },
-  left_at_gate: { label: 'LEFT AT GATE', class: 'status-stamp bg-butter text-ink', icon: <Clock className="w-3 h-3" /> },
-  open: { label: 'OPEN', class: 'status-pending', icon: <AlertTriangle className="w-3 h-3" /> },
-  published: { label: 'PUBLISHED', class: 'status-stamp bg-lilac text-ink', icon: <CheckCircle className="w-3 h-3" /> },
+const statusConfig = {
+  approved: { label: 'APPROVED', class: 'status-approved', icon: CheckCircle },
+  denied: { label: 'DENIED', class: 'status-denied', icon: XCircle },
+  entered: { label: 'ENTERED', class: 'status-entered', icon: CheckCircle },
+  left_at_gate: { label: 'LEFT AT GATE', class: 'status-pending', icon: Clock },
+  open: { label: 'OPEN', class: 'status-pending', icon: AlertTriangle },
+  published: { label: 'PUBLISHED', class: 'bg-lilac/10 text-lilac border-lilac', icon: Megaphone },
 };
 
 export function Dashboard() {
   return (
     <div className="space-y-6">
-      {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold font-heading text-ink">Dashboard</h1>
           <p className="text-ink/60 font-body mt-1">Welcome back! Here's what's happening at the gate today.</p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="btn btn-secondary btn-sm">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Reports
-          </button>
-          <button className="btn btn-primary btn-sm">
-            <Users className="w-4 h-4 mr-2" />
-            Add Resident
-          </button>
+          <Button variant="secondary" size="sm" leftIcon={<TrendingUpIcon className="w-4 h-4" />}>Reports</Button>
+          <Button variant="primary" size="sm" leftIcon={<Users className="w-4 h-4" />}>Add Resident</Button>
         </div>
       </div>
-      
-      {/* Stats Grid */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
-      
-      {/* Main Content Grid */}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
         <section className="lg:col-span-2">
           <Card>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold font-heading text-ink">Recent Activity</h2>
-              <button className="btn btn-ghost btn-sm">View all</button>
+              <Button variant="ghost" size="sm">View all</Button>
             </div>
             <DataTable
               columns={[
@@ -87,9 +69,9 @@ export function Dashboard() {
                 if (column.key === 'type') {
                   const typeIcons: Record<string, React.ReactNode> = {
                     visitor: <UserCheck className="w-4 h-4 text-sky" />,
-                    delivery: <TrendingUp className="w-4 h-4 text-peach" />,
+                    delivery: <Package className="w-4 h-4 text-peach" />,
                     ticket: <Ticket className="w-4 h-4 text-butter" />,
-                    notice: <AlertTriangle className="w-4 h-4 text-lilac" />,
+                    notice: <Megaphone className="w-4 h-4 text-lilac" />,
                   };
                   return (
                     <span className="inline-flex items-center gap-1 text-sm font-body">
@@ -103,7 +85,7 @@ export function Dashboard() {
                   if (!config) return <span className="text-ink/80">{row.status}</span>;
                   return (
                     <span className={`${config.class} inline-flex items-center gap-1`}>
-                      {config.icon}
+                      {config.icon && <config.icon className="w-3 h-3" />}
                       {config.label}
                     </span>
                   );
@@ -113,31 +95,26 @@ export function Dashboard() {
             />
           </Card>
         </section>
-        
-        {/* Quick Actions & Alerts */}
+
         <section className="space-y-6">
           <Card>
             <h2 className="text-xl font-bold font-heading text-ink mb-4">Quick Actions</h2>
             <div className="space-y-3">
-              <button className="w-full btn btn-primary btn-lg justify-start">
-                <UserCheck className="w-5 h-5 mr-2" />
+              <Button variant="primary" size="lg" className="w-full" justify="start" leftIcon={<UserCheck className="w-5 h-5" />}>
                 Create Visitor Pass
-              </button>
-              <button className="w-full btn btn-secondary btn-lg justify-start">
-                <AlertTriangle className="w-5 h-5 mr-2" />
+              </Button>
+              <Button variant="secondary" size="lg" className="w-full" justify="start" leftIcon={<Megaphone className="w-5 h-5" />}>
                 Publish Notice
-              </button>
-              <button className="w-full btn btn-ghost btn-lg justify-start border-butter text-butter hover:bg-butter/10">
-                <Ticket className="w-5 h-5 mr-2" />
+              </Button>
+              <Button variant="ghost" size="lg" className="w-full" justify="start" borderColor="butter" textColor="butter" hoverBg="butter/10" leftIcon={<Ticket className="w-5 h-5" />}>
                 View All Tickets
-              </button>
-              <button className="w-full btn btn-ghost btn-lg justify-start border-lilac text-lilac hover:bg-lilac/10">
-                <Users className="w-5 h-5 mr-2" />
+              </Button>
+              <Button variant="ghost" size="lg" className="w-full" justify="start" borderColor="lilac" textColor="lilac" hoverBg="lilac/10" leftIcon={<Users className="w-5 h-5" />}>
                 Manage Residents
-              </button>
+              </Button>
             </div>
           </Card>
-          
+
           <Card>
             <h2 className="text-xl font-bold font-heading text-ink mb-4">System Status</h2>
             <div className="space-y-4">
@@ -146,28 +123,28 @@ export function Dashboard() {
                   <div className="w-3 h-3 rounded-full bg-mint" />
                   <span className="font-medium font-body">Gate Connection</span>
                 </div>
-                <span className="badge badge-primary">ONLINE</span>
+                <span className="bg-mint border-3 border-mint text-ink text-xs font-bold font-mono px-2.5 py-0.5 rounded-[999px]">ONLINE</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-sky/10 border-2 border-sky rounded-[8px]">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-sky" />
                   <span className="font-medium font-body">Push Service</span>
                 </div>
-                <span className="badge badge-info">ACTIVE</span>
+                <span className="bg-sky border-3 border-sky text-ink text-xs font-bold font-mono px-2.5 py-0.5 rounded-[999px]">ACTIVE</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-lilac/10 border-2 border-lilac rounded-[8px]">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-lilac" />
                   <span className="font-medium font-body">SMS Gateway</span>
                 </div>
-                <span className="badge badge-secondary">CONNECTED</span>
+                <span className="bg-lilac border-3 border-lilac text-ink text-xs font-bold font-mono px-2.5 py-0.5 rounded-[999px]">CONNECTED</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-butter/10 border-2 border-butter rounded-[8px]">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-butter" />
                   <span className="font-medium font-body">Storage</span>
                 </div>
-                <span className="badge badge-warning">67% Used</span>
+                <span className="bg-butter border-3 border-butter text-ink text-xs font-bold font-mono px-2.5 py-0.5 rounded-[999px]">67% Used</span>
               </div>
             </div>
           </Card>

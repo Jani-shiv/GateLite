@@ -1,5 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 import { Card } from './Card';
+import { clsx } from 'clsx';
 
 interface StatCardProps {
   label: string;
@@ -30,19 +31,19 @@ const iconColorClasses = {
 
 export function StatCard({ label, value, icon: Icon, trend, trendUp, color }: StatCardProps) {
   return (
-    <Card className={`${colorClasses[color]} border-2`} hover>
+    <Card className={clsx(colorClasses[color], 'border-2')} hover>
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm font-medium font-body text-ink/70">{label}</p>
           <p className="text-3xl font-bold font-heading text-ink mt-1">{value}</p>
           <div className="flex items-center gap-1 mt-2">
-            <span className={`text-sm font-medium font-mono ${trendUp ? 'text-mint' : 'text-rose'}`}>
+            <span className={clsx('text-sm font-medium font-mono', trendUp ? 'text-mint' : 'text-rose')}>
               {trendUp ? '↑' : '↓'} {trend}
             </span>
             <span className="text-xs font-body text-ink/50">vs last week</span>
           </div>
         </div>
-        <div className={`w-12 h-12 rounded-[12px] border-3 border-ink flex items-center justify-center ${iconColorClasses[color]}`}>
+        <div className={clsx('w-12 h-12 rounded-[12px] border-3 border-ink flex items-center justify-center', iconColorClasses[color])}>
           <Icon className="w-6 h-6" aria-hidden="true" />
         </div>
       </div>

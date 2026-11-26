@@ -1,0 +1,12 @@
+export { Dashboard } from './Dashboard';
+export { Societies } from './Societies';
+export { Residents } from './Residents';
+export { Visitors } from './Visitors';
+export { Passes } from './Passes';
+export { Tickets } from './Tickets';
+export { Notices } from './Notices';
+export { Staff } from './Staff';
+export { Amenities } from './Amenities';
+export { Billing } from './Billing';
+export { Settings } from './Settings';
+export { Login } from './Login';

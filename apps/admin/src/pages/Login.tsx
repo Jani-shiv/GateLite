@@ -1,257 +1,113 @@
 import { useState } from 'react';
-import { Shield, Mail, Smartphone, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Building2, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { AuthLayout } from '../components/layout';
 
 export function Login() {
-  const [method, setMethod] = useState<'phone' | 'email'>('phone');
-  const [value, setValue] = useState('');
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [step, setStep] = useState<'input' | 'otp'>('input');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [timer, setTimer] = useState(60);
-  
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    if (method === 'phone' && value.length >= 10) {
-      setStep('otp');
-      startTimer();
-    } else if (method === 'email' && value.includes('@')) {
-      setStep('otp');
-      startTimer();
-    } else {
-      setError('Please enter a valid phone number or email');
-    }
-    setLoading(false);
-  };
-  
-  const handleOtpSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    
-    const otpCode = otp.join('');
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    if (otpCode === '123456' || otpCode.length === 6) {
-      // Success - redirect to dashboard
+
+    try {
+      // TODO: Implement actual login
+      await new Promise(resolve => setTimeout(resolve, 1000));
       window.location.href = '/dashboard';
-    } else {
-      setError('Invalid OTP. Try 123456 for demo.');
-    }
-    setLoading(false);
-  };
-  
-  const handleOtpChange = (index: number, value: string) => {
-    if (value.length === 1 && index < 5) {
-      const inputs = document.querySelectorAll('.otp-box') as NodeListOf<HTMLInputElement>;
-      inputs[index + 1]?.focus();
-    }
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-  };
-  
-  const startTimer = () => {
-    setTimer(60);
-    const interval = setInterval(() => {
-      setTimer(t => {
-        if (t <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return t - 1;
-      });
-    }, 1000);
-  };
-  
-  const resendOtp = () => {
-    if (timer === 0) {
-      setError('');
-      startTimer();
-      // Simulate resend
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   return (
-    <div className="min-h-screen bg-paper flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
+    <AuthLayout>
+      <Card className="w-full">
         <div className="text-center mb-8">
-          <div className="bg-butter border-3 border-ink rounded-[12px] p-6 inline-block mb-4">
+          <div className="bg-butter border-3 border-ink rounded-[12px] p-4 inline-block mb-6">
             <span className="text-3xl font-bold font-heading text-ink tracking-tight">GATELITE</span>
           </div>
-          <p className="text-ink/60 font-body">Admin Dashboard</p>
+          <h1 className="text-2xl font-bold font-heading text-ink mb-2">Sign in to Admin</h1>
+          <p className="text-ink/60 font-body">Enter your credentials to access the dashboard</p>
         </div>
-        
-        {step === 'input' ? (
-          <Card>
-            <h2 className="text-xl font-bold font-heading text-ink mb-2">Sign In</h2>
-            <p className="text-ink/60 font-body mb-6">Enter your phone or email to receive a one-time code</p>
-            
-            {error && (
-              <div className="mb-4 p-3 bg-rose/10 border-2 border-rose rounded-[8px] text-sm text-rose font-medium">
-                {error}
-              </div>
-            )}
-            
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setMethod('phone')}
-                  className={`flex-1 btn btn-md flex items-center justify-center gap-2 ${
-                    method === 'phone' ? 'btn-primary' : 'btn-ghost'
-                  }`}
-                >
-                  <Smartphone className="w-4 h-4" />
-                  Phone
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMethod('email')}
-                  className={`flex-1 btn btn-md flex items-center justify-center gap-2 ${
-                    method === 'email' ? 'btn-primary' : 'btn-ghost'
-                  }`}
-                >
-                  <Mail className="w-4 h-4" />
-                  Email
-                </button>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium font-body text-ink mb-2">
-                  {method === 'phone' ? 'Phone Number' : 'Email Address'}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink/40">
-                    {method === 'phone' ? '+91' : '@'}
-                  </span>
-                  <input
-                    type={method === 'phone' ? 'tel' : 'email'}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder={method === 'phone' ? '98765 43210' : 'admin@example.com'}
-                    className="input pl-10"
-                    inputMode={method === 'phone' ? 'tel' : 'email'}
-                    autoComplete={method === 'phone' ? 'tel' : 'email'}
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full btn btn-primary btn-lg"
-                disabled={loading || !value}
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                    Sending...
-                  </>
-                ) : (
-                  'Send OTP'
-                )}
-              </button>
-            </form>
-            
-            <p className="text-xs text-ink/50 text-center mt-6">
-              By continuing, you agree to our{' '}
-              <a href="#" className="underline hover:text-ink">Terms of Service</a>{' '}
-              and{' '}
-              <a href="#" className="underline hover:text-ink">Privacy Policy</a>
-            </p>
-            
-            <div className="mt-6 pt-6 border-t-2 border-ink text-center">
-              <p className="text-sm text-ink/60">Demo OTP: <code className="font-mono bg-ink/10 px-1 rounded">123456</code></p>
-            </div>
-          </Card>
-        ) : (
-          <Card>
-            <h2 className="text-xl font-bold font-heading text-ink mb-2">Verify Code</h2>
-            <p className="text-ink/60 font-body mb-6">
-              Enter the 6-digit code sent to <strong>{method === 'phone' ? `+91 ${value}` : value}</strong>
-            </p>
-            
-            {error && (
-              <div className="mb-4 p-3 bg-rose/10 border-2 border-rose rounded-[8px] text-sm text-rose font-medium">
-                {error}
-              </div>
-            )}
-            
-            <form onSubmit={handleOtpSubmit} className="space-y-4">
-              <div className="otp-boxes">
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={digit}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Backspace' && !digit && index > 0) {
-                        const inputs = document.querySelectorAll('.otp-box') as NodeListOf<HTMLInputElement>;
-                        inputs[index - 1]?.focus();
-                      }
-                    }}
-                    className="otp-box"
-                    maxLength={1}
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    disabled={loading}
-                  />
-                ))}
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full btn btn-primary btn-lg"
-                disabled={loading || otp.some(d => !d)}
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                    Verifying...
-                  </>
-                ) : (
-                  'Verify & Sign In'
-                )}
-              </button>
-            </form>
-            
-            <div className="flex items-center justify-between mt-4">
-              <button
-                type="button"
-                onClick={() => setStep('input')}
-                className="btn btn-ghost btn-sm"
-              >
-                ← Change method
-              </button>
-              
-              <button
-                type="button"
-                onClick={resendOtp}
-                disabled={timer > 0}
-                className="btn btn-ghost btn-sm"
-              >
-                {timer > 0 ? `Resend in ${timer}s` : 'Resend OTP'}
-              </button>
-            </div>
-            
-            <div className="mt-6 pt-6 border-t-2 border-ink text-center">
-              <p className="text-sm text-ink/60">Demo OTP: <code className="font-mono bg-ink/10 px-1 rounded">123456</code></p>
-            </div>
-          </Card>
+
+        {error && (
+          <div className="mb-6 p-4 bg-rose/10 border-2 border-rose rounded-[8px] flex items-center gap-3 animate-slide-in" role="alert">
+            <AlertCircle className="w-5 h-5 text-rose flex-shrink-0" aria-hidden="true" />
+            <p className="text-sm font-body text-rose">{error}</p>
+          </div>
         )}
-      </div>
-    </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <Input
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="admin@gate-lite.com"
+            leftIcon={<Mail className="w-5 h-5" />}
+            required
+            autoComplete="email"
+          />
+
+          <Input
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            leftIcon={<Lock className="w-5 h-5" />}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-ink/40 hover:text-ink"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            }
+            required
+            autoComplete="current-password"
+          />
+
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                className="w-4 h-4 border-3 border-ink rounded-[4px] accent-mint"
+              />
+              <span className="text-sm font-body text-ink/70">Remember me</span>
+            </label>
+            <a href="#" className="text-sm font-body text-sky hover:underline">Forgot password?</a>
+          </div>
+
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            className="w-full"
+            loading={loading}
+          >
+            Sign In
+          </Button>
+        </form>
+
+        <div className="mt-8 pt-6 border-t-2 border-ink">
+          <p className="text-center text-sm font-body text-ink/60">
+            Demo credentials: <br />
+            <code className="font-mono text-sm bg-ink/5 px-2 py-1 rounded-[4px]">admin@gate-lite.com</code> / <code className="font-mono text-sm bg-ink/5 px-2 py-1 rounded-[4px]">password123</code>
+          </p>
+        </div>
+      </Card>
+    </AuthLayout>
   );
 }

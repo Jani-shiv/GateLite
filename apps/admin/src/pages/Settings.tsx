@@ -1,421 +1,351 @@
-import { Building2, Users, Bell, Shield, Clock, Palette, Save, Database, Globe } from 'lucide-react';
+import { Plus, Search, Filter, Download, Upload, User, Shield, Bell, Palette, Globe, CreditCard, Settings as SettingsIcon, Key, Moon, Sun, Save, AlertCircle, MessageSquare, Mail, Database } from 'lucide-react';
 import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Select } from '../components/ui/Input';
 import { useState } from 'react';
 
 export function Settings() {
-  const [activeTab, setActiveTab] = useState('general');
-  const [societyName, setSocietyName] = useState('Green Valley Society');
-  const [address, setAddress] = useState('Ahmedabad, Gujarat');
-  const [timezone, setTimezone] = useState('Asia/Kolkata');
-  const [escalationTime, setEscalationTime] = useState(30);
-  const [retentionDays, setRetentionDays] = useState(90);
-  const [workingHoursStart, setWorkingHoursStart] = useState('06:00');
-  const [workingHoursEnd, setWorkingHoursEnd] = useState('22:00');
-  const [pushEnabled, setPushEnabled] = useState(true);
-  const [smsEnabled, setSmsEnabled] = useState(true);
-  const [emailEnabled, setEmailEnabled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  
+  const [activeTab, setActiveTab] = useState<'general' | 'notifications' | 'appearance' | 'billing' | 'security' | 'integrations'>('general');
+
   const tabs = [
-    { id: 'general', label: 'General', icon: Building2 },
+    { id: 'general', label: 'General', icon: SettingsIcon },
     { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'security', label: 'Security', icon: Shield },
     { id: 'appearance', label: 'Appearance', icon: Palette },
+    { id: 'billing', label: 'Billing', icon: CreditCard },
+    { id: 'security', label: 'Security', icon: Shield },
+    { id: 'integrations', label: 'Integrations', icon: Globe },
   ];
-  
+
+  const handleSave = () => {
+    // TODO: Implement save logic
+    alert('Settings saved successfully!');
+  };
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold font-heading text-ink">Settings</h1>
-        <p className="text-ink/60 font-body mt-1">Configure society settings and preferences</p>
+    <div className="space-y-6 max-w-4xl">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold font-heading text-ink">Settings</h1>
+          <p className="text-ink/60 font-body mt-1">Manage your society settings and preferences</p>
+        </div>
+        <Button variant="primary" size="md" leftIcon={<Save className="w-4 h-4" />} onClick={handleSave}>
+          Save Changes
+        </Button>
       </div>
-      
-      {/* Tab Navigation */}
-      <Card padding="none" className="overflow-hidden">
-        <div className="border-b-3 border-ink">
-          <nav className="flex overflow-x-auto" role="tablist" aria-label="Settings tabs">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              const Icon = tab.icon;
-              return (
+
+      <div className="flex border-b-3 border-ink mb-6 overflow-x-auto">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            className={`px-6 py-3 font-body font-medium border-b-3 border-ink -mb-px transition-all duration-fast whitespace-nowrap ${
+              activeTab === tab.id
+                ? 'text-ink border-ink'
+                : 'text-ink/50 hover:text-ink'
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <tab.icon className="w-4 h-4" aria-hidden="true" />
+              {tab.label}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {activeTab === 'general' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Society Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input label="Society Name" defaultValue="Green Valley Society" />
+              <Input label="Address" defaultValue="SG Highway, Ahmedabad, Gujarat 380054" />
+              <Input label="City" defaultValue="Ahmedabad" />
+              <Input label="State" defaultValue="Gujarat" />
+              <Input label="Pincode" defaultValue="380054" type="number" />
+              <Select
+                label="Plan"
+                options={[
+                  { value: 'free', label: 'Free' },
+                  { value: 'pro', label: 'Pro' },
+                  { value: 'enterprise', label: 'Enterprise' },
+                ]}
+                defaultValue="pro"
+              />
+            </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Working Hours</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input label="Gate Opens" type="time" defaultValue="06:00" />
+              <Input label="Gate Closes" type="time" defaultValue="22:00" />
+            </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Escalation Policy</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Input label="Escalation Timeout (seconds)" type="number" defaultValue="30" />
+              <Select
+                label="Escalation Policy"
+                options={[
+                  { value: 'ALLOW', label: 'Allow Entry' },
+                  { value: 'DENY', label: 'Deny Entry' },
+                  { value: 'HOLD', label: 'Hold for Guard' },
+                ]}
+                defaultValue="HOLD"
+              />
+              <Input label="Photo Retention (days)" type="number" defaultValue="90" />
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {activeTab === 'notifications' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Notification Channels</h2>
+            <div className="space-y-4">
+              {[
+                { label: 'Push Notifications', description: 'Send push notifications to residents', enabled: true },
+                { label: 'SMS Notifications', description: 'Send SMS for critical alerts', enabled: true },
+                { label: 'WhatsApp Notifications', description: 'Send WhatsApp messages', enabled: false },
+                { label: 'Email Notifications', description: 'Send email summaries', enabled: true },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center justify-between p-4 bg-white border-3 border-ink rounded-[12px]">
+                  <div>
+                    <p className="font-medium font-body text-ink">{item.label}</p>
+                    <p className="text-sm font-body text-ink/50">{item.description}</p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" defaultChecked={item.enabled} className="sr-only peer" />
+                    <div className="w-11 h-6 bg-ink/10 peer-focus:ring-4 peer-focus:ring-ink peer-focus:ring-offset-3 peer-focus:ring-offset-white rounded-[999px] peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-ink after:border-3 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Notification Templates</h2>
+            <div className="space-y-4">
+              <Button variant="secondary" size="md" leftIcon={<Plus className="w-4 h-4" />}>Add Template</Button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { name: 'Visitor Approved', channel: 'Push', variables: ['visitor_name', 'flat_number'] },
+                  { name: 'Delivery Arrived', channel: 'SMS', variables: ['delivery_service', 'flat_number'] },
+                  { name: 'Ticket Created', channel: 'Email', variables: ['ticket_id', 'category'] },
+                  { name: 'Payment Due', channel: 'WhatsApp', variables: ['amount', 'due_date'] },
+                ].map((item, index) => (
+                  <div key={index} className="p-4 bg-white border-3 border-ink rounded-[12px]">
+                    <p className="font-medium font-body text-ink">{item.name}</p>
+                    <p className="text-sm font-body text-ink/50">Channel: {item.channel}</p>
+                    <p className="text-sm font-body text-ink/50 mt-1">Variables: {item.variables.join(', ')}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {activeTab === 'appearance' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Theme Settings</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-4 border-3 border-ink rounded-[12px]">
+                <p className="font-medium font-body text-ink mb-2">Light Mode (Default)</p>
+                <div className="p-4 bg-white border-3 border-ink rounded-[12px] text-center text-sm font-body text-ink/60">Preview</div>
+              </div>
+              <div className="p-4 border-3 border-ink rounded-[12px]">
+                <p className="font-medium font-body text-ink mb-2">Dark Mode</p>
+                <div className="p-4 bg-ink border-3 border-mint rounded-[12px] text-center text-sm font-body text-mint">Preview</div>
+              </div>
+              <div className="p-4 border-3 border-ink rounded-[12px]">
+                <p className="font-medium font-body text-ink mb-2">Auto (System)</p>
+                <div className="p-4 bg-white border-3 border-ink rounded-[12px] text-center text-sm font-body text-ink/60">Preview</div>
+              </div>
+            </div>
+            <div className="mt-6 flex items-center gap-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="theme" defaultChecked className="w-4 h-4 accent-mint" />
+                <span className="font-body text-ink">Light</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="theme" className="w-4 h-4 accent-mint" />
+                <span className="font-body text-ink">Dark</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="theme" className="w-4 h-4 accent-mint" />
+                <span className="font-body text-ink">System</span>
+              </label>
+            </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Color Theme</h2>
+            <p className="text-ink/60 mb-4">Choose your society's accent color (affects badges, buttons, highlights)</p>
+            <div className="flex flex-wrap gap-4">
+              {[
+                { name: 'Mint (Default)', color: 'bg-mint', text: 'text-ink' },
+                { name: 'Sky', color: 'bg-sky', text: 'text-ink' },
+                { name: 'Lilac', color: 'bg-lilac', text: 'text-ink' },
+                { name: 'Peach', color: 'bg-peach', text: 'text-ink' },
+                { name: 'Butter', color: 'bg-butter', text: 'text-ink' },
+                { name: 'Rose', color: 'bg-rose', text: 'text-white' },
+              ].map((theme) => (
                 <button
-                  key={tab.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`${tab.id}-panel`}
-                  id={`${tab.id}-tab`}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    flex items-center gap-2 px-6 py-4 font-body font-medium text-sm
-                    border-b-3 transition-all duration-fast ease-out
-                    ${isActive 
-                      ? 'border-mint text-mint bg-mint/5' 
-                      : 'border-transparent text-ink/60 hover:text-ink hover:bg-ink/3'
-                    }
-                  `}
+                  key={theme.name}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-[12px] border-3 border-ink transition-all duration-fast ${theme.color} ${theme.text}`}
                 >
-                  <Icon className="w-4 h-4" />
-                  {tab.label}
+                  <span className="w-6 h-6 rounded-[8px] border-3 border-ink" />
+                  <span className="font-medium font-body">{theme.name}</span>
                 </button>
-              );
-            })}
-          </nav>
+              ))}
+            </div>
+          </Card>
         </div>
-        
-        {/* Tab Panels */}
-        <div className="p-6">
-          {/* General Tab */}
-          <div role="tabpanel" id="general-panel" aria-labelledby="general-tab" hidden={activeTab !== 'general'}>
-            <div className="max-w-2xl space-y-6">
-              <h2 className="text-xl font-bold font-heading text-ink">Society Information</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium font-body text-ink mb-2">Society Name</label>
-                  <input
-                    type="text"
-                    value={societyName}
-                    onChange={(e) => setSocietyName(e.target.value)}
-                    className="input"
-                    placeholder="Enter society name"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium font-body text-ink mb-2">Address</label>
-                  <textarea
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="input min-h-[100px] resize-y"
-                    placeholder="Enter full address"
-                  />
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Timezone</label>
-                    <select value={timezone} onChange={(e) => setTimezone(e.target.value)} className="select">
-                      <option value="Asia/Kolkata">Asia/Kolkata (UTC+5:30)</option>
-                      <option value="UTC">UTC</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Plan</label>
-                    <select className="select">
-                      <option value="starter">Starter (Free)</option>
-                      <option value="standard">Standard</option>
-                      <option value="pro" selected>Pro</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="pt-6 border-t-2 border-ink">
-                <h2 className="text-xl font-bold font-heading text-ink mb-4">Gate Operations</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Escalation Timeout (seconds)</label>
-                    <input
-                      type="number"
-                      value={escalationTime}
-                      onChange={(e) => setEscalationTime(Number(e.target.value))}
-                      className="input"
-                      min="10"
-                      max="300"
-                    />
-                    <p className="text-xs text-ink/50 mt-1">Time before escalating to next resident/guard</p>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Photo Retention (days)</label>
-                    <input
-                      type="number"
-                      value={retentionDays}
-                      onChange={(e) => setRetentionDays(Number(e.target.value))}
-                      className="input"
-                      min="1"
-                      max="365"
-                    />
-                    <p className="text-xs text-ink/50 mt-1">Visitor photos auto-deleted after this period</p>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Working Hours Start</label>
-                    <input
-                      type="time"
-                      value={workingHoursStart}
-                      onChange={(e) => setWorkingHoursStart(e.target.value)}
-                      className="input"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Working Hours End</label>
-                    <input
-                      type="time"
-                      value={workingHoursEnd}
-                      onChange={(e) => setWorkingHoursEnd(e.target.value)}
-                      className="input"
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="pt-6 border-t-2 border-ink flex justify-end">
-                <button className="btn btn-primary btn-md flex items-center gap-2">
-                  <Save className="w-4 h-4" />
-                  Save Changes
-                </button>
-              </div>
+      )}
+
+      {activeTab === 'billing' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Billing Configuration</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input label="Monthly Maintenance Fee" type="number" defaultValue="2500" placeholder="₹" />
+              <Input label="Late Fee (per month)" type="number" defaultValue="100" placeholder="₹" />
+              <Input label="Grace Period (days)" type="number" defaultValue="10" />
+              <Select
+                label="Billing Cycle"
+                options={[
+                  { value: 'monthly', label: 'Monthly' },
+                  { value: 'quarterly', label: 'Quarterly' },
+                  { value: 'yearly', label: 'Yearly' },
+                ]}
+                defaultValue="monthly"
+              />
             </div>
-          </div>
-          
-          {/* Notifications Tab */}
-          <div role="tabpanel" id="notifications-panel" aria-labelledby="notifications-tab" hidden={activeTab !== 'notifications'}>
-            <div className="max-w-2xl space-y-6">
-              <h2 className="text-xl font-bold font-heading text-ink">Notification Channels</h2>
-              
-              <div className="space-y-4">
-                <Card className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-[12px] bg-mint/20 border-2 border-mint flex items-center justify-center">
-                        <Bell className="w-5 h-5 text-mint" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium font-body text-ink">Push Notifications</h3>
-                        <p className="text-sm text-ink/60">Real-time alerts via Firebase Cloud Messaging</p>
-                      </div>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={pushEnabled}
-                        onChange={(e) => setPushEnabled(e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-ink/10 peer-focus:ring-3 peer-focus:ring-ink peer-focus:ring-offset-3 peer-focus:ring-offset-lilac rounded-[999px] peer peer-checked:bg-mint peer-checked:border-3 peer-checked:border-ink after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-[22px] after:h-[22px] after:bg-white after:rounded-full after:border-3 after:border-ink after:shadow-chip after:transition-all after:duration-fast peer-checked:after:translate-x-full"></div>
-                    </label>
-                  </div>
-                </Card>
-                
-                <Card className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-[12px] bg-sky/20 border-2 border-sky flex items-center justify-center">
-                        <Globe className="w-5 h-5 text-sky" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium font-body text-ink">SMS Notifications</h3>
-                        <p className="text-sm text-ink/60">Critical alerts via MSG91 SMS gateway</p>
-                      </div>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={smsEnabled}
-                        onChange={(e) => setSmsEnabled(e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-ink/10 peer-focus:ring-3 peer-focus:ring-ink peer-focus:ring-offset-3 peer-focus:ring-offset-lilac rounded-[999px] peer peer-checked:bg-mint peer-checked:border-3 peer-checked:border-ink after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-[22px] after:h-[22px] after:bg-white after:rounded-full after:border-3 after:border-ink after:shadow-chip after:transition-all after:duration-fast peer-checked:after:translate-x-full"></div>
-                    </label>
-                  </div>
-                </Card>
-                
-                <Card className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-[12px] bg-lilac/20 border-2 border-lilac flex items-center justify-center">
-                        <Database className="w-5 h-5 text-lilac" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium font-body text-ink">Email Notifications</h3>
-                        <p className="text-sm text-ink/60">Weekly digests and reports via email</p>
-                      </div>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={emailEnabled}
-                        onChange={(e) => setEmailEnabled(e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-ink/10 peer-focus:ring-3 peer-focus:ring-ink peer-focus:ring-offset-3 peer-focus:ring-offset-lilac rounded-[999px] peer peer-checked:bg-mint peer-checked:border-3 peer-checked:border-ink after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-[22px] after:h-[22px] after:bg-white after:rounded-full after:border-3 after:border-ink after:shadow-chip after:transition-all after:duration-fast peer-checked:after:translate-x-full"></div>
-                    </label>
-                  </div>
-                </Card>
-              </div>
-              
-              <div className="pt-6 border-t-2 border-ink">
-                <h3 className="font-medium font-body text-ink mb-4">Default Notification Preferences</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Visitor arrival notifications</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Delivery notifications</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Ticket updates</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">SOS alerts</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" />
-                    <span className="font-body text-sm text-ink">Weekly digest email</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" />
-                    <span className="font-body text-sm text-ink">Maintenance reminders</span>
-                  </label>
-                </div>
-              </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Payment Gateway</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Select
+                label="Payment Provider"
+                options={[
+                  { value: 'razorpay', label: 'Razorpay' },
+                  { value: 'cashfree', label: 'Cashfree' },
+                  { value: 'stripe', label: 'Stripe' },
+                ]}
+                defaultValue="razorpay"
+              />
+              <Input label="API Key" type="password" placeholder="Enter API key" />
+              <Input label="API Secret" type="password" placeholder="Enter API secret" />
+              <Input label="Webhook Secret" type="password" placeholder="Enter webhook secret" />
             </div>
-          </div>
-          
-          {/* Security Tab */}
-          <div role="tabpanel" id="security-panel" aria-labelledby="security-tab" hidden={activeTab !== 'security'}>
-            <div className="max-w-2xl space-y-6">
-              <h2 className="text-xl font-bold font-heading text-ink">Security Settings</h2>
-              
-              <Card>
-                <h3 className="font-medium font-body text-ink mb-4">Access Control</h3>
-                <div className="space-y-4">
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Require OTP for all logins</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Device binding (remember trusted devices)</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" />
-                    <span className="font-body text-sm text-ink">MFA for admin accounts</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Audit log all admin actions</span>
-                  </label>
-                </div>
-              </Card>
-              
-              <Card>
-                <h3 className="font-medium font-body text-ink mb-4">Rate Limiting</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">OTP requests per 10 min</label>
-                    <input type="number" value={3} className="input" min="1" max="10" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">OTP requests per hour per IP</label>
-                    <input type="number" value={10} className="input" min="1" max="50" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Login attempts before lockout</label>
-                    <input type="number" value={5} className="input" min="3" max="20" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium font-body text-ink mb-2">Lockout duration (minutes)</label>
-                    <input type="number" value={15} className="input" min="5" max="120" />
-                  </div>
-                </div>
-              </Card>
-              
-              <Card>
-                <h3 className="font-medium font-body text-ink mb-4">Data Privacy</h3>
-                <div className="space-y-4">
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Encrypt phone numbers at rest</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Encrypt ID documents at rest</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Auto-purge visitor photos after retention period</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-mint border-2 border-ink rounded" defaultChecked />
-                    <span className="font-body text-sm text-ink">Enable data export for residents (DPDP compliance)</span>
-                  </label>
-                </div>
-              </Card>
-            </div>
-          </div>
-          
-          {/* Appearance Tab */}
-          <div role="tabpanel" id="appearance-panel" aria-labelledby="appearance-tab" hidden={activeTab !== 'appearance'}>
-            <div className="max-w-2xl space-y-6">
-              <h2 className="text-xl font-bold font-heading text-ink">Appearance</h2>
-              
-              <Card>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium font-body text-ink">Dark Mode</h3>
-                    <p className="text-sm text-ink/60">Use system preference or force light/dark</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button className={`btn btn-sm ${!darkMode ? 'btn-primary' : 'btn-ghost'}`}>Light</button>
-                    <button className={`btn btn-sm ${darkMode ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setDarkMode(!darkMode)}>Dark</button>
-                    <button className="btn btn-sm btn-ghost">System</button>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card>
-                <h3 className="font-medium font-body text-ink mb-4">Theme Preview</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white border-3 border-ink rounded-[12px]">
-                    <h4 className="font-medium font-body text-ink mb-2">Light Mode</h4>
-                    <div className="space-y-2">
-                      <button className="btn btn-primary btn-sm w-full">Primary</button>
-                      <button className="btn btn-secondary btn-sm w-full">Secondary</button>
-                      <button className="btn btn-danger btn-sm w-full">Danger</button>
-                      <button className="btn btn-ghost btn-sm w-full">Ghost</button>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gray-900 border-3 border-gray-300 rounded-[12px]">
-                    <h4 className="font-medium font-body text-white mb-2">Dark Mode</h4>
-                    <div className="space-y-2">
-                      <button className="w-full px-4 py-2 bg-green-400 text-gray-900 border-2 border-gray-900 rounded-[12px] font-medium">Primary</button>
-                      <button className="w-full px-4 py-2 bg-purple-400 text-gray-900 border-2 border-gray-900 rounded-[12px] font-medium">Secondary</button>
-                      <button className="w-full px-4 py-2 bg-red-400 text-gray-900 border-2 border-gray-900 rounded-[12px] font-medium">Danger</button>
-                      <button className="w-full px-4 py-2 bg-transparent text-white border-2 border-gray-400 rounded-[12px] font-medium">Ghost</button>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-              
-              <Card>
-                <h3 className="font-medium font-body text-ink mb-4">Language</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="radio" name="language" className="w-4 h-4 accent-mint border-2 border-ink" defaultChecked />
-                    <span className="font-body text-sm text-ink">English</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="radio" name="language" className="w-4 h-4 accent-mint border-2 border-ink" />
-                    <span className="font-body text-sm text-ink">Hindi</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-ink/3 border-2 border-ink rounded-[12px] cursor-pointer">
-                    <input type="radio" name="language" className="w-4 h-4 accent-mint border-2 border-ink" />
-                    <span className="font-body text-sm text-ink">Gujarati</span>
-                  </label>
-                </div>
-              </Card>
-            </div>
-          </div>
+          </Card>
         </div>
-      </Card>
+      )}
+
+      {activeTab === 'security' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Access Control</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-white border-3 border-ink rounded-[12px]">
+                <div>
+                  <p className="font-medium font-body text-ink">Two-Factor Authentication</p>
+                  <p className="text-sm font-body text-ink/50">Require 2FA for admin accounts</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" defaultChecked className="sr-only peer" />
+                  <div className="w-11 h-6 bg-ink/10 peer-focus:ring-4 peer-focus:ring-ink peer-focus:ring-offset-3 peer-focus:ring-offset-white rounded-[999px] peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-ink after:border-3 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mint"></div>
+                </label>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-white border-3 border-ink rounded-[12px]">
+                <div>
+                  <p className="font-medium font-body text-ink">Session Timeout</p>
+                  <p className="text-sm font-body text-ink/50">Auto-logout after inactivity</p>
+                </div>
+                <Select
+                  options={[
+                    { value: '15', label: '15 minutes' },
+                    { value: '30', label: '30 minutes' },
+                    { value: '60', label: '1 hour' },
+                    { value: '120', label: '2 hours' },
+                  ]}
+                  defaultValue="30"
+                />
+              </div>
+              <div className="flex items-center justify-between p-4 bg-white border-3 border-ink rounded-[12px]">
+                <div>
+                  <p className="font-medium font-body text-ink">Device Limit</p>
+                  <p className="text-sm font-body text-ink/50">Max devices per user</p>
+                </div>
+                <Select
+                  options={[
+                    { value: '1', label: '1 device' },
+                    { value: '3', label: '3 devices' },
+                    { value: '5', label: '5 devices' },
+                    { value: '10', label: '10 devices' },
+                  ]}
+                  defaultValue="3"
+                />
+              </div>
+            </div>
+          </Card>
+
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">API Security</h2>
+            <div className="space-y-4">
+              <Input label="API Rate Limit (requests/minute)" type="number" defaultValue="100" />
+              <Input label="JWT Access Token Expiry" type="text" defaultValue="15m" />
+              <Input label="JWT Refresh Token Expiry" type="text" defaultValue="30d" />
+              <Button variant="secondary" size="md" leftIcon={<Key className="w-4 h-4" />}>Rotate Secrets</Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {activeTab === 'integrations' && (
+        <div className="space-y-6">
+          <Card>
+            <h2 className="text-xl font-bold font-heading text-ink mb-6">Third-Party Integrations</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { name: 'SMS Gateway (MSG91)', description: 'Send SMS notifications', status: 'connected', icon: MessageSquare },
+                { name: 'WhatsApp Business API', description: 'Send WhatsApp messages', status: 'disconnected', icon: MessageSquare },
+                { name: 'Email Service (SendGrid)', description: 'Send email notifications', status: 'connected', icon: Mail },
+                { name: 'Firebase Cloud Messaging', description: 'Push notifications', status: 'connected', icon: Bell },
+                { name: 'Google Maps', description: 'Location services', status: 'connected', icon: Globe },
+                { name: 'AWS S3 / MinIO', description: 'File storage', status: 'connected', icon: Database },
+              ].map((item, index) => (
+                <div key={index} className="p-4 bg-white border-3 border-ink rounded-[12px]">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <item.icon className="w-5 h-5 text-ink/60" aria-hidden="true" />
+                      <p className="font-medium font-body text-ink">{item.name}</p>
+                    </div>
+                    <span className={`badge badge-${item.status === 'connected' ? 'primary' : 'danger'}`}>
+                      {item.status === 'connected' ? 'Connected' : 'Disconnected'}
+                    </span>
+                  </div>
+                  <p className="text-sm font-body text-ink/50 mb-3">{item.description}</p>
+                  <Button
+                    variant={item.status === 'connected' ? 'ghost' : 'primary'}
+                    size="sm"
+                    className="w-full"
+                  >
+                    {item.status === 'connected' ? 'Configure' : 'Connect'}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

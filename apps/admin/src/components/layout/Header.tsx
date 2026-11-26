@@ -1,19 +1,85 @@
-import { Bell, User, LogOut, Moon, Sun } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { clsx } from 'clsx';
+import { Bell, User, LogOut, Moon, Sun, ChevronDown, Search, Filter } from 'lucide-react';
+import { Button } from '../ui/Button';
+import { Input } from '../ui/Input';
 
-export function Header() {
+interface HeaderProps {
+  title?: string;
+  subtitle?: string;
+  actions?: React.ReactNode;
+}
+
+export function Header({ title, subtitle, actions }: HeaderProps) {
   const [darkMode, setDarkMode] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  
+  const [searchQuery, setSearchQuery] = useState('');
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setShowUserMenu(false);
+      }
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
     <header className="sticky top-0 z-30 bg-white border-b-3 border-ink shadow-card">
       <div className="flex items-center justify-between h-16 px-6">
-        {/* Page title will be rendered by pages */}
-        <div className="flex-1" />
-        
-        {/* Actions */}
+        {/* Left: Search & Title */}
+        <div className="flex items-center gap-4 flex-1 min-w-0">
+          <div className="relative w-full max-w-md hidden md:block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink/40" aria-hidden="true" />
+            <Input
+              type="search"
+              placeholder="Search residents, flats, notices..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+              aria-label="Global search"
+            />
+          </div>
+
+          {title && (
+            <div className="hidden lg:block">
+              <h1 className="text-xl font-bold font-heading text-ink">{title}</h1>
+              {subtitle && <p className="text-sm font-body text-ink/60">{subtitle}</p>}
+            </div>
+          )}
+        </div>
+
+        {/* Right: Actions */}
         <div className="flex items-center gap-2">
+          {actions}
+
+          {/* Global Search (mobile) */}
+          <div className="md:hidden">
+            <button
+              className="btn btn-ghost btn-sm p-2"
+              onClick={() => { /* TODO: open search modal */ }}
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+          </div>
+
           {/* Theme toggle */}
           <button
             className="btn btn-ghost btn-sm p-2"
@@ -22,9 +88,9 @@ export function Header() {
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          
+
           {/* Notifications */}
-          <div className="relative">
+          <div className="relative" ref={notificationsRef}>
             <button
               className="btn btn-ghost btn-sm p-2 relative"
               onClick={() => setShowNotifications(!showNotifications)}
@@ -36,9 +102,9 @@ export function Header() {
                 3
               </span>
             </button>
-            
+
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-72 bg-white border-3 border-ink shadow-hero rounded-[12px] p-4 animate-slide-up">
+              <div className="absolute right-0 mt-2 w-80 bg-white border-3 border-ink shadow-hero rounded-[12px] p-4 animate-slide-up">
                 <div className="font-bold font-heading mb-3">Notifications</div>
                 <div className="space-y-3 max-h-64 overflow-y-auto">
                   <div className="p-3 bg-sky/10 border-2 border-sky rounded-[8px]">
@@ -54,13 +120,13 @@ export function Header() {
                     <div className="text-xs text-ink/60 mt-1">1 hour ago</div>
                   </div>
                 </div>
-                <button className="btn btn-ghost btn-sm w-full mt-3">View all</button>
+                <Button variant="ghost" size="sm" className="w-full mt-3">View all</Button>
               </div>
             )}
           </div>
-          
+
           {/* User menu */}
-          <div className="relative">
+          <div className="relative" ref={userMenuRef}>
             <button
               className="btn btn-ghost btn-sm flex items-center gap-2"
               onClick={() => setShowUserMenu(!showUserMenu)}
@@ -71,18 +137,19 @@ export function Header() {
                 <User className="w-4 h-4 text-ink" aria-hidden="true" />
               </div>
               <span className="hidden sm:block font-medium">Admin</span>
+              <ChevronDown className="w-4 h-4 hidden sm:block" aria-hidden="true" />
             </button>
-            
+
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-40 bg-white border-3 border-ink shadow-hero rounded-[12px] p-2 animate-slide-up">
-                <button className="w-full btn btn-ghost btn-sm justify-start px-3 py-2">
+                <Button variant="ghost" size="sm" className="w-full justify-start px-3 py-2" onClick={() => setShowUserMenu(false)}>
                   <User className="w-4 h-4 mr-2" aria-hidden="true" />
                   Profile
-                </button>
-                <button className="w-full btn btn-ghost btn-sm justify-start px-3 py-2 text-rose">
+                </Button>
+                <Button variant="ghost" size="sm" className="w-full justify-start px-3 py-2 text-rose" onClick={() => setShowUserMenu(false)}>
                   <LogOut className="w-4 h-4 mr-2" aria-hidden="true" />
                   Sign out
-                </button>
+                </Button>
               </div>
             )}
           </div>
